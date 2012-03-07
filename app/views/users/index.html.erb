@@ -1,31 +1,33 @@
-<h1>Listing users</h1>
+  <h1>Listing users</h1>
 
-<table>
-  <tr>
-    <th>First</th>
-    <th>Last</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Group</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <div class="wrap">
+    <table>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Group</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.first %></td>
-    <td><%= user.last %></td>
-    <td><%= user.email %></td>
-    <td><%= user.phone %></td>
-    <td><%= user.group %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.first %></td>
+        <td><%= user.last %></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone %></td>
+        <td><%= Group.find(user.group_id).desc %></td>
+        <td class="show"><%= link_to 'Show', user %></td>
+        <td class="edit"><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td class="del"><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
 
-<br />
-
-<%= link_to 'New User', new_user_path %>
+  <div class="leftSide">
+    <%= link_to 'New User', new_user_path %>
+  </div>

@@ -1,3 +1,41 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.form , div.wrap{
+  position:relative;
+  float:left;
+	border:1px solid #ddd;
+  width:auto;
+  margin:0 0 0 40px;
+  padding:8px;
+  input {
+  	border:1px solid #aaa;
+  }
+}
+
+table {
+	tr {
+		td {
+			padding:2px 7px;
+			font-style:italic;
+			background:#eee;
+		}
+		td.del a {
+			color:red;
+		}
+		td.show a {
+			color:green;
+		}
+		td.edit a {
+			color:blue;
+		}
+	}
+}
+
+div.form form div {
+}
+
+div.leftSide {
+	clear:both;
+}
