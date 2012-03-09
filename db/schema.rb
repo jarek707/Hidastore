@@ -11,13 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120309033909) do
-
-  create_table "add_legend_to_plugs", :force => true do |t|
-    t.string   "legend"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20120309185916) do
 
   create_table "fields", :force => true do |t|
     t.string   "dom"
@@ -26,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20120309033909) do
     t.integer  "plug_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "legend"
+    t.integer  "vflag"
   end
 
   add_index "fields", ["plug_id"], :name => "index_fields_on_plug_id"

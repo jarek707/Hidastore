@@ -1,4 +1,9 @@
 Hs::Application.routes.draw do
+
+  resources :plugs do
+    resources :fields
+  end
+
   resources :users
 
   resources :groups
