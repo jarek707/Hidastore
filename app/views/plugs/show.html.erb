@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<div class='head'>Plugins:</div>
+<ul class="show">
+  <li class='lab'>Legend: </li>
+  <li class='val'><%= @plug.legend %></li>
+
+  <li class='lab'>Tab name: </li>
+  <li class='val'><%= @plug.tab_name %></li>
+
+  <li class='lab'>Flags: </li>
+  <li class='val'><%= @plug.flags %></li>
+</ul>
+
+<div class='head'>Fields</div>
+
+  <% @plug.fields.each do |field| %>
+  <ul class='show' field_id="<%= field.id %>" >
+      <li class='lab'>Dom Id: </li>
+      <li><%= field.dom %></li>
+      <li class='lab'>XML: </li>
+      <li><%= field.xml %></li>
+      <li class='lab'>Flags: </li>
+      <li><%= field.flags %></li>
+      <li><button class="edit"></button></li>
+  </ul>
+  <% end %>
+
+<div class='head'>Add Field:<button class="add"></button></div>
+<%= form_for([@plug, @plug.fields.build]) do |f| %>
+  <ul class='show add_field'>
+    <li class="lab"><%= f.label "Dom Id:" %></li>
+    <li><%= f.text_field :dom %></li>
+    <li class="lab"><%= f.label "Flags:"%></li>
+    <li><%= f.text_field :flags %></li>
+    <li class="lab"><%= f.label "XML:" %></li>
+    <li><%= f.text_field :xml %></li>
+
+    <li class="actions">
+      <%= f.submit %>
+    </li>
+</ul>
+
+<% end %>
+
+<br />
+<%= link_to 'Edit', edit_plug_path(@plug) %> |
+<%= link_to 'Back', plugs_path %>

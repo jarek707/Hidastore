@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Dom:</b>
+  <%= @field.dom %>
+</p>
+
+<p>
+  <b>Flags:</b>
+  <%= @field.flags %>
+</p>
+
+<p>
+  <b>Xml:</b>
+  <%= @field.xml %>
+</p>
+
+<p>
+  <b>Plug:</b>
+  <%= @field.plug %>
+</p>
+
+
+<%= link_to 'Edit', edit_field_path(@field) %> |
+<%= link_to 'Back', fields_path %>

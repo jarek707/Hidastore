@@ -11,35 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120307081254) do
+ActiveRecord::Schema.define(:version => 20120309033909) do
 
-  create_table "datasets", :force => true do |t|
-    t.string   "tbl"
-    t.integer  "pid"
+  create_table "add_legend_to_plugs", :force => true do |t|
+    t.string   "legend"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "fields", :force => true do |t|
-    t.string   "dom_id"
-    t.string   "xml_id"
-    t.string   "label"
-    t.integer  "valid_id"
-    t.integer  "vis_id"
-    t.integer  "dataset_id"
+    t.string   "dom"
+    t.integer  "flags"
+    t.string   "xml"
+    t.integer  "plug_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "fields", ["dataset_id"], :name => "index_fields_on_dataset_id"
-  add_index "fields", ["valid_id"], :name => "index_fields_on_valid_id"
-  add_index "fields", ["vis_id"], :name => "index_fields_on_vis_id"
+  add_index "fields", ["plug_id"], :name => "index_fields_on_plug_id"
 
   create_table "groups", :force => true do |t|
     t.string   "desc"
     t.string   "hex_val"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "plugs", :force => true do |t|
+    t.string   "tab_name"
+    t.integer  "flags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "legend"
   end
 
   create_table "users", :force => true do |t|
@@ -53,11 +56,5 @@ ActiveRecord::Schema.define(:version => 20120307081254) do
   end
 
   add_index "users", ["group_id"], :name => "index_users_on_group_id"
-
-  create_table "vailds", :force => true do |t|
-    t.string   "desc"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

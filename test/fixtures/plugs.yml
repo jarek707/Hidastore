@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tab_name: MyString
+  flags: 1
+
+two:
+  tab_name: MyString
+  flags: 1

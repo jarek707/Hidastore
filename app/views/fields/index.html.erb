@@ -1,0 +1,29 @@
+<h1>Listing fields</h1>
+
+<table>
+  <tr>
+    <th>Dom</th>
+    <th>Flags</th>
+    <th>Xml</th>
+    <th>Plug</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fields.each do |field| %>
+  <tr>
+    <td><%= field.dom %></td>
+    <td><%= field.flags %></td>
+    <td><%= field.xml %></td>
+    <td><%= field.plug %></td>
+    <td><%= link_to 'Show', field %></td>
+    <td><%= link_to 'Edit', edit_field_path(field) %></td>
+    <td><%= link_to 'Destroy', field, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Field', new_field_path %>
