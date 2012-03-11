@@ -10,6 +10,9 @@
 
   <li class='lab'>Flags: </li>
   <li class='val'><%= @plug.flags %></li>
+
+  <li class='lab'>Parent: </li>
+  <li><%= Plug.find(@plug.parent_id).legend %></li>
 </ul>
 
 <div class='head'>Fields</div>
@@ -35,24 +38,24 @@
   </div>
 <% end %>
 
-<div class='head'>Add Field:<button class="add"></button></div>
-  <%= form_for([@plug, @plug.fields.build]) do |f| %>
-    <ul class='show add_field'>
-      <li class="actions">
-        <%= f.submit %>
-      </li>
-      <div class='fields_wrap'>
-        <li class="lab"><%= f.label "Label:" %></li>
-        <li class='val field_label'><%= f.text_field :label %></li>
-        <li class="lab"><%= f.label "Dom Id:" %></li>
-        <li class='val field_dom'><%= f.text_field :dom %></li>
-        <li class="lab"><%= f.label "Flags:"%></li>
-        <li class='val field_flags'><%= f.text_field :flags %></li>
-        <li class="lab"><%= f.label "XML:" %></li>
-        <li class="val field_xml"><%= f.text_field :xml %></li>
-      </div>
-    </ul>
-  <% end %>
+<button class="add"></button>
+<%= form_for([@plug, @plug.fields.build]) do |f| %>
+  <ul class='show add_field'>
+    <div class='fields_wrap'>
+      <li class="lab"><%= f.label "Label:" %></li>
+      <li class='val field_label'><%= f.text_field :label %></li>
+      <li class="lab"><%= f.label "Dom Id:" %></li>
+      <li class='val field_dom'><%= f.text_field :dom %></li>
+      <li class="lab"><%= f.label "Flags:"%></li>
+      <li class='val field_flags'><%= f.text_field :flags %></li>
+      <li class="lab"><%= f.label "XML:" %></li>
+      <li class="val field_xml"><%= f.text_field :xml %></li>
+    </div>
+    <li class="actions">
+      <%= f.submit %>
+    </li>
+  </ul>
+<% end %>
 
 <br />
 <%= link_to 'Edit', edit_plug_path(@plug) %> |

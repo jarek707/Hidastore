@@ -71,7 +71,7 @@ class FieldsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to fields_url }
-      format.json { head :ok }
+      format.json { render json: @field }
     end
   end
 end

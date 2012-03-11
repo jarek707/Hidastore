@@ -1,23 +1,26 @@
-<h1>Listing plugs</h1>
+<h1>All Plugs</h1>
 
 <table>
   <tr>
+    <th>Legend</th>
     <th>Tab name</th>
     <th>Flags</th>
-    <th></th>
-    <th></th>
+    <th>Parent</th>
     <th></th>
   </tr>
 
 <% @plugs.each do |plug| %>
-  <tr>
-    <td><%= plug.legend %></td>
-    <td><%= plug.tab_name %></td>
-    <td><%= plug.flags %></td>
-    <td><%= link_to 'Show', plug %></td>
-    <td><%= link_to 'Edit', edit_plug_path(plug) %></td>
-    <td><%= link_to 'Destroy', plug, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+  <% if plug.legend != "Root" %>
+    <tr>
+      <td><%= plug.legend %></td>
+      <td><%= plug.tab_name %></td>
+      <td><%= plug.flags %></td>
+      <td><%= Plug.find(plug.parent_id).legend %></td>
+      <td><%= link_to 'Show', plug %></td>
+      <td><%= link_to 'Edit', edit_plug_path(plug) %></td>
+      <td><%= link_to 'Destroy', plug, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
 <% end %>
 </table>
 

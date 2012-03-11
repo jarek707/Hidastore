@@ -3,8 +3,6 @@ class PlugsController < ApplicationController
   # GET /plugs.json
   def index
     @plugs = Plug.all
-    @plug = Plug.new() 
-    @plug.info()
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,6 +25,13 @@ class PlugsController < ApplicationController
   # GET /plugs/new
   # GET /plugs/new.json
   def new
+    #@rootPlug = Plug.where("legend='Root'")
+    # need root plug to start the system
+    if Plug.where("legend='Root'").length == 0
+    #if @rootPlug.length == 0 
+      @root = Plug.new({:tab_name => "root_no_tab", :legend => "Root"});
+      @root.save
+    end
     @plug = Plug.new
 
     respond_to do |format|
@@ -62,7 +67,6 @@ class PlugsController < ApplicationController
   def update
     @plug = Plug.find(params[:id])
 
-console.debug ("HERE is putting")
     respond_to do |format|
       if @plug.update_attributes(params[:plug])
         format.html { redirect_to @plug, notice: 'Plug was successfully updated.' }

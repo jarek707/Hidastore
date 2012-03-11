@@ -21,18 +21,22 @@ div.field {
   }
 }
 
+div.fields_wrap {
+  position:relative;
+  float:left;
+}
 .actions input {
   border:none;
   background:url('dbsave24.png');
   width:24px;
   height:24px;
   color:transparent;
+  margin-left:8px;
 }
 
 ul.show {
   @include relBlockLeft;
   padding-left:6px;
-  clear:both;
   width:99%;
   margin:2px 0;
   li {
@@ -116,6 +120,8 @@ button.delete {
 }
 ul.add_field {
   display:none;
+  position:relative;
+  float:left;
 } 
 div.li {
   position:relative;

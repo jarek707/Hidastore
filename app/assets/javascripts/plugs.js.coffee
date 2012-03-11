@@ -20,6 +20,7 @@ Trigger =
      
   buttons: (arg) ->
     elm = $(arg)
+    console.debug  [ 'in buttons ' , arg ]
 
     switch elm.attr('class')
       when "edit"
@@ -35,7 +36,7 @@ Trigger =
         wrap_id = "#show_wrap" + elm.attr("field_id") 
         $("#show_wrap" + elm.attr("field_id") + " button.update").show();
         $(wrap_id + " ul.show").hide()
-        $(wrap_id + " ul.show.form").append("<form id='edit_field'>" + $("div.fields_wrap").html() + "</form>").show()
+        $(wrap_id + " ul.show.form").prepend("<form id='edit_field'>" + $("div.fields_wrap").html() + "</form>").show()
         $(wrap_id + " ul.show.form li.val input#" + $(el).attr('class').substr(4) ).val($(el).html()) for el in $(wrap_id + " ul.show.text li.val")
 
       when "update"
@@ -61,10 +62,25 @@ Trigger =
         $('ul.show.add_field').show()
 
       when "delete" 
-        console.debug elm.attr('class')
+        elm = $(arg)
+        if typeof elm.attr('field_id') is 'undefined'
+          elm = elm.parent() while typeof elm.attr('field_id') is 'undefined' and typeof elm.parent() isnt 'undefined'
+
+        $.ajax {
+          type: "DELETE",
+          url: $("form.new_field").attr('action') + '/' + elm.attr('field_id'),
+          data: $("#edit_field").serialize(),
+          dataType: "json",
+          success: (data) ->
+            console.debug ['success',  data ]
+            $("#show_wrap" + elm.attr('field_id')).remove()
+          error: (data) -> 
+            console.debug [ 'error', data]
+        }
 
       else 
         console.debug  "This button has no class."
       
 
 setTimeout ( -> $(":button").bind "click",  -> Trigger.buttons(this) ) , 100
+window.Trigger=Trigger
