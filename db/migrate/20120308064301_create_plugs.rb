@@ -3,6 +3,7 @@ class CreatePlugs < ActiveRecord::Migration
     create_table :plugs do |t|
       t.string :tab_name
       t.string :flags
+      t.string :legend
 
       t.timestamps
     end

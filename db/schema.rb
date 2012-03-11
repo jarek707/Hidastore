@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20120309185916) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "label"
-    t.integer  "vflag"
   end
 
   add_index "fields", ["plug_id"], :name => "index_fields_on_plug_id"
@@ -35,10 +34,10 @@ ActiveRecord::Schema.define(:version => 20120309185916) do
 
   create_table "plugs", :force => true do |t|
     t.string   "tab_name"
-    t.integer  "flags"
+    t.string   "flags"
+    t.string   "legend"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "legend"
   end
 
   create_table "users", :force => true do |t|
