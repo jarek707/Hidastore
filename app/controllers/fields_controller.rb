@@ -52,9 +52,11 @@ class FieldsController < ApplicationController
 
     respond_to do |format|
       if @field.update_attributes(params[:field])
+  logger.debug "PUTTING IN FIELD good"
         format.html { redirect_to @field, notice: 'Field was successfully updated.' }
-        format.json { head :ok }
+        format.json { render json: params[:field] }
       else
+  logger.debug "PUTTING IN FIELD error"
         format.html { render action: "edit" }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end

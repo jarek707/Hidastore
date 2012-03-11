@@ -21,6 +21,14 @@ div.field {
   }
 }
 
+.actions input {
+  border:none;
+  background:url('dbsave24.png');
+  width:24px;
+  height:24px;
+  color:transparent;
+}
+
 ul.show {
   @include relBlockLeft;
   padding-left:6px;
@@ -35,9 +43,37 @@ ul.show {
   li.lab {
     font-weight:bold;
     font-size:11px;
+    font-style:italic;
     margin:3px 4px 0 12px;
     color:navy;
   }
+  li.val,li.val input {
+    width:96px;
+    min-width:80px;
+  }
+  li.val input {
+    border:1px solid #ddd;
+  }
+  li.buttons { 
+    color:transparent;
+    width:32px;
+    height:32px;
+    a {
+      color:transparent;
+      font-size:32px;
+      overlay:hidden;
+    }
+  }
+  li.show {
+    background:url("view32.png");
+  }
+  li.back {
+    background:url("goback32.png");
+  }
+}
+
+ul.show.form {
+  clear:right;
 }
 
 div.head {
@@ -58,9 +94,30 @@ button {
   height:16px;
   margin-left:8px;
 }
+
+button.alledit{
+  background:url("alledit16.png");
+}
+
+button.update{
+  background:url('dbsave24.png');
+  width:24px;
+  height:24px;
+  position:relative;
+  float:left;
+}
+
 button.add {
   background:url("add16.png");
+}
+
+button.delete {
+  background:url("delete16.png");
 }
 ul.add_field {
   display:none;
 } 
+div.li {
+  position:relative;
+  float:left;
+}

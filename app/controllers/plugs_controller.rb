@@ -3,6 +3,8 @@ class PlugsController < ApplicationController
   # GET /plugs.json
   def index
     @plugs = Plug.all
+    @plug = Plug.new() 
+    @plug.info()
 
     respond_to do |format|
       format.html # index.html.erb
@@ -42,6 +44,7 @@ class PlugsController < ApplicationController
   # POST /plugs.json
   def create
     @plug = Plug.new(params[:plug])
+    @plug.generate (params[:plug])
 
     respond_to do |format|
       if @plug.save
@@ -59,6 +62,7 @@ class PlugsController < ApplicationController
   def update
     @plug = Plug.find(params[:id])
 
+console.debug ("HERE is putting")
     respond_to do |format|
       if @plug.update_attributes(params[:plug])
         format.html { redirect_to @plug, notice: 'Plug was successfully updated.' }

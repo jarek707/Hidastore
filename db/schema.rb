@@ -15,12 +15,12 @@ ActiveRecord::Schema.define(:version => 20120309185916) do
 
   create_table "fields", :force => true do |t|
     t.string   "dom"
-    t.integer  "flags"
+    t.string   "flags"
     t.string   "xml"
     t.integer  "plug_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "legend"
+    t.integer  "label"
     t.integer  "vflag"
   end
 

@@ -2,7 +2,7 @@ class CreateFields < ActiveRecord::Migration
   def change
     create_table :fields do |t|
       t.string :dom
-      t.integer :flags
+      t.string :flags
       t.string :xml
       t.references :plug
 

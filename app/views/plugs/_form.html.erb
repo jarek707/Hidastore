@@ -11,18 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label "Legend"%><br />
-    <%= f.text_field :legend %>
-  </div>
-
-  <div class="field">
-    <%= f.label "Table Name"%><br />
-    <%= f.text_field :tab_name %>
-  </div>
-  <div class="field">
-    <%= f.label "Configuration flags" %><br />
-    <%= f.number_field :flags %>
+  <ul class="show">
+    <li class='lab'><%= f.label "Legend"%><li />
+    <li><%= f.text_field :legend %></li>
+    <li class='lab'><%= f.label "Table Name"%><li />
+    <li><%= f.text_field :tab_name %></li>
+    <li class='lab'><%= f.label "Configuration flags" %><li />
+    <li><%= f.text_field :flags %><li>
   </div>
 
   <div class="actions">
