@@ -5,7 +5,7 @@
   <li class='lab'>Legend: </li>
   <li class='val'><%= @plug.legend %></li>
 
-  <li class='lab'>Tab name: </li>
+  <li class='lab'>Table name: </li>
   <li class='val'><%= @plug.tab_name %></li>
 
   <li class='lab'>Flags: </li>
@@ -15,7 +15,7 @@
   <li><%= Plug.find(@plug.parent_id).legend %></li>
 </ul>
 
-<div class='head'>Fields</div>
+<div class='head'>Fields:</div>
 
 <% @plug.fields.each do |field| %>
   <div id="show_wrap<%= field.id %>" field_id="<%= field.id %>" >
@@ -38,7 +38,7 @@
   </div>
 <% end %>
 
-<button class="add"></button>
+<div class='head'>Add Field:</div>
 <%= form_for([@plug, @plug.fields.build]) do |f| %>
   <ul class='show add_field'>
     <div class='fields_wrap'>

@@ -6,6 +6,10 @@
  *= require_tree . 
 */
 
+body {
+  background-color:#dee !important;
+}
+
 @mixin relBlockLeft {
   display:block;
   position:relative;
@@ -27,7 +31,7 @@ div.fields_wrap {
 }
 .actions input {
   border:none;
-  background:url('dbsave24.png');
+  background:url('dbadd24.png');
   width:24px;
   height:24px;
   color:transparent;
@@ -119,7 +123,6 @@ button.delete {
   background:url("delete16.png");
 }
 ul.add_field {
-  display:none;
   position:relative;
   float:left;
 } 
