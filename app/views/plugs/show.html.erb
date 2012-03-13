@@ -55,7 +55,7 @@
           <%= f.select(:elmtype_id, Elmtype.find(:all).collect {|c| [c.description,c.id] }) %>
         <li class="lab"><%= f.label "Exposure:" %></li>
         <li class="val field_exposure">
-          <%= f.select(:elmtype_id, Exposure.find(:all).collect {|c| [c.description,c.id] }) %>
+          <%= f.select(:exposure_id, Exposure.find(:all).collect {|c| [c.description,c.id] }) %>
         </li>
       </div>
       <li class="actions">
