@@ -9,20 +9,33 @@ Trigger =
     return if anc.length then anc else false
 
   ajax_update_return: ( wrap_id, data ) ->
-    $("#edit_field").remove()
     $(wrap_id + " button.update").hide()
     $(wrap_id + " ul.show").show()
     if typeof data is 'undefined'
       alert  ("Error was encountered when updating record.")
     else
-      $(wrap_id + " ul.show li.field_#{key}").html "#{value}" for key,value of data
+      @from_input( wrap_id , "#{key}" , "#{value}" ) for key,value of data
+    $("#edit_field").remove()
+   
+  to_input: ( wrap_id, el ) ->
+    if typeof $(el).attr('sel_id') is 'undefined'
+      $(wrap_id + " ul.show.form li.val input#" + $(el).attr('class').substr 4 ).val($(el).html())
+    else
+      $( wrap_id + " ul.show.form li.val select#" + $(el).attr('class').substr(4) + " option[value='" + ($(el).attr('sel_id')) + "']" ).attr('selected','selected')
+
+  from_input: ( wrap_id , key , value ) ->
+    el = $(wrap_id + " ul.show.text li.field_" + key) 
+    if typeof el.attr('sel_id') is 'undefined'
+      el.html value
+    else
+      el.html $(wrap_id + " ul.show.form li.field_" + key + " select option:selected").text()
+      el.attr( 'sel_id' , value )
 
   buttons: (arg) ->
     elm = $ arg
 
     switch elm.attr('class')
       when "edit"
-        console.debug @config_params
         if ( elm = @find_ancestor_with_attribute elm, 'field_id' )
           if @edit_in_progress
             $("#edit_field").remove()
@@ -34,7 +47,7 @@ Trigger =
           $(wrap_id + " button.update").show()
           $(wrap_id + " ul.show").hide()
           $(wrap_id + " ul.show.form").prepend("<form id='edit_field'>" + $("div.fields_wrap").html() + "</form>").show()
-          $(wrap_id + " ul.show.form li.val input#" + $(el).attr('class').substr 4 ).val($(el).html()) for el in $(wrap_id + " ul.show.text li.val")
+          @to_input( wrap_id, el ) for el in $(wrap_id + " ul.show.text li.val")
           $(wrap_id + " form li:nth-child(2) input").focus()
 
       when "update"

@@ -13,7 +13,7 @@
   <div class='head'><%= @plug.legend %>:</div>
   <ul class="show">
     <li class='lab'>Table: </li>
-    <li class='val'><%= @plug.tab_name %></li>
+    <li><%= @plug.tab_name %></li>
 
     <li class='lab'>Parent: </li>
     <li><%= Plug.find(@plug.parent_id).legend  %></li>
@@ -32,9 +32,9 @@
         <li class='lab'>Dom Id: </li>
         <li class='val field_dom'><%= field.dom %></li>
         <li class='lab'>Elm Type: </li>
-        <li class='val field_elmtype'><%= Elmtype.find(field.elmtype_id).description %></li>
+        <li class='val field_elmtype_id' sel_id="<%= field.elmtype_id %>"><%= Elmtype.find(field.elmtype_id).description %></li>
         <li class='lab'>Exposure: </li>
-        <li class='val field_xml'><%= Exposure.find(field.exposure_id).description %></li>
+        <li class='val field_exposure_id' sel_id="<%= field.exposure_id %>"><%= Exposure.find(field.exposure_id).description %></li>
       </ul>
       <ul class='show form' >
         <button class='update' style="display:none" />
@@ -51,10 +51,10 @@
         <li class="lab"><%= f.label "Dom Id:" %></li>
         <li class='val field_dom'><%= f.text_field :dom %></li>
         <li class="lab">Elm Type:</li>
-        <li class='val field_elmtype'>
+        <li class='val field_elmtype_id'>
           <%= f.select(:elmtype_id, Elmtype.find(:all).collect {|c| [c.description,c.id] }) %>
         <li class="lab"><%= f.label "Exposure:" %></li>
-        <li class="val field_exposure">
+        <li class="val field_exposure_id">
           <%= f.select(:exposure_id, Exposure.find(:all).collect {|c| [c.description,c.id] }) %>
         </li>
       </div>
