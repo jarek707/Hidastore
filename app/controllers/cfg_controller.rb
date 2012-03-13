@@ -1,0 +1,2 @@
+class CfgController < ApplicationController
+end

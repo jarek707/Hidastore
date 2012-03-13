@@ -1,0 +1,25 @@
+<h1>Listing exposures</h1>
+
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Flag</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @exposures.each do |exposure| %>
+  <tr>
+    <td><%= exposure.description %></td>
+    <td><%= exposure.flag %></td>
+    <td><%= link_to 'Show', exposure %></td>
+    <td><%= link_to 'Edit', edit_exposure_path(exposure) %></td>
+    <td><%= link_to 'Destroy', exposure, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Exposure', new_exposure_path %>

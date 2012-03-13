@@ -19,7 +19,7 @@
         <td><%= user.last %></td>
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
-        <td><%= Group.find(user.group_id).desc %></td>
+        <td><%= Group.find(user.group_id).descr %></td>
         <td class="show"><%= link_to 'Show', user %></td>
         <td class="edit"><%= link_to 'Edit', edit_user_path(user) %></td>
         <td class="del"><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>

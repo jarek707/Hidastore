@@ -1,0 +1,25 @@
+<h1>Listing elmtypes</h1>
+
+<table>
+  <tr>
+    <th>Flag</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @elmtypes.each do |elmtype| %>
+  <tr>
+    <td><%= elmtype.flag %></td>
+    <td><%= elmtype.description %></td>
+    <td><%= link_to 'Show', elmtype %></td>
+    <td><%= link_to 'Edit', edit_elmtype_path(elmtype) %></td>
+    <td><%= link_to 'Destroy', elmtype, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Elmtype', new_elmtype_path %>

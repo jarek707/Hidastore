@@ -1,5 +1,11 @@
 Hs::Application.routes.draw do
 
+  resources :exposures
+
+  resources :siteparams
+
+  resources :elmtypes
+
   resources :plugs do
     resources :fields
   end

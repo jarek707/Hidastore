@@ -15,6 +15,7 @@ class PlugsController < ApplicationController
   def show
     @plug = Plug.find(params[:id])
     logger.debug @plug.to_json()
+    @plugs = Plug.where("legend!='Root' AND legend!='Plugins' AND legend!='Fields'")
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,10 +26,8 @@ class PlugsController < ApplicationController
   # GET /plugs/new
   # GET /plugs/new.json
   def new
-    #@rootPlug = Plug.where("legend='Root'")
     # need root plug to start the system
     if Plug.where("legend='Root'").length == 0
-    #if @rootPlug.length == 0 
       @root = Plug.new({:tab_name => "root_no_tab", :legend => "Root"});
       @root.save
     end

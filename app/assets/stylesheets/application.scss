@@ -7,7 +7,9 @@
 */
 
 body {
-  background-color:#dee !important;
+  background-color:#ddd !important;
+  min-width:866px;
+  padding: 0 0 0 8px;
 }
 
 @mixin relBlockLeft {
@@ -16,12 +18,29 @@ body {
   float:left;
 }
 
+@mixin paneDivs {
+  @include relBlockLeft;
+  border:1px solid #aaa;
+  -webkit-border-radius:8px;
+  padding:0 8px 8px 8px;  
+}
+
+div#leftPane {
+  @include paneDivs;
+  min-width:120px;
+}
+
+div#rightPane {
+  @include paneDivs;
+  margin-left:12px;
+}
+
 div.field {
   input, label {
     @include relBlockLeft;
   }
   input {
-    border:1px solid #ddd; 
+    border:1px solid #eee; 
   }
 }
 
@@ -46,21 +65,24 @@ ul.show {
   li {
     @include relBlockLeft;
     list-style:none;
-    font-size:16px;
+    font-size:13px;
   }
   li.lab {
     font-weight:bold;
     font-size:11px;
     font-style:italic;
-    margin:3px 4px 0 12px;
+    margin:1px 4px 0 12px;
     color:navy;
   }
   li.val,li.val input {
     width:96px;
     min-width:80px;
+    overflow:hidden;
+    white-space:nowrap;
   }
+
   li.val input {
-    border:1px solid #ddd;
+    border:1px solid #999;
   }
   li.buttons { 
     color:transparent;
@@ -77,6 +99,14 @@ ul.show {
   }
   li.back {
     background:url("goback32.png");
+  }
+}
+
+div#leftPane ul.show {
+  width:120px;
+  clear:both;
+  li {
+    font-size:12px;
   }
 }
 

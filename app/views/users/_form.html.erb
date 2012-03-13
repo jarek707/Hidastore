@@ -30,7 +30,7 @@
     </div>
     <div class="field">
       <%= f.label :group %><br />
-      <%= f.select(:group_id, Group.find(:all).collect {|c| [c.desc,c.id] }) %>
+      <%= f.select(:group_id, Group.find(:all).collect {|c| [c.descr,c.id] }) %>
     </div>
     <div class="actions">
       <%= f.submit %>

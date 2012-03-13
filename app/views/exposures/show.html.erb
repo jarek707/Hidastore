@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @exposure.description %>
+</p>
+
+<p>
+  <b>Flag:</b>
+  <%= @exposure.flag %>
+</p>
+
+
+<%= link_to 'Edit', edit_exposure_path(@exposure) %> |
+<%= link_to 'Back', exposures_path %>

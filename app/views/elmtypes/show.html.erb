@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Flag:</b>
+  <%= @elmtype.flag %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @elmtype.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_elmtype_path(@elmtype) %> |
+<%= link_to 'Back', elmtypes_path %>
