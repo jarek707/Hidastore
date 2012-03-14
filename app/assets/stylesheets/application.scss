@@ -12,6 +12,8 @@ body {
   padding: 0 0 0 8px;
 }
 
+$fieldBg: #e2e3ea;
+
 @mixin relBlockLeft {
   display:block;
   position:relative;
@@ -22,7 +24,7 @@ body {
   @include relBlockLeft;
   border:1px solid #aaa;
   -webkit-border-radius:8px;
-  padding:0 8px 8px 8px;  
+  padding:0 0px 12px 16px;  
 }
 
 div#leftPane {
@@ -33,28 +35,6 @@ div#leftPane {
 div#rightPane {
   @include paneDivs;
   margin-left:12px;
-}
-
-div.field {
-  input, label {
-    @include relBlockLeft;
-  }
-  input {
-    border:1px solid #eee; 
-  }
-}
-
-div.fields_wrap {
-  position:relative;
-  float:left;
-}
-.actions input {
-  border:none;
-  background:url('dbadd24.png');
-  width:24px;
-  height:24px;
-  color:transparent;
-  margin-left:8px;
 }
 
 ul.show {
@@ -75,16 +55,21 @@ ul.show {
     color:navy;
   }
   li.val,li.val input {
-    width:96px;
+    width:120px;
     min-width:80px;
-    overflow:hidden;
     white-space:nowrap;
-    border-bottom:1px solid #ccc;
+    margin-left:10px;
+    text-align:right;
+    -webkit-border-radius:6px;
   }
 
-  li.val input {
-    border:1px solid #999;
+  li.val input , li.val select {
+    border:1px solid #bbb;
+    background: $fieldBg;
+    margin-left:0;
+    text-align:left;
   }
+
   li.buttons { 
     color:transparent;
     width:32px;
@@ -95,11 +80,29 @@ ul.show {
       overlay:hidden;
     }
   }
+
   li.show {
     background:url("view32.png");
   }
+
   li.back {
     background:url("goback32.png");
+  }
+}
+
+ul.show.text li.val {
+    background: $fieldBg;
+}
+ul.show.labels {
+  margin-left:0px;
+  clear:both;
+  margin-bottom:1px solid #888;
+  height:22px;
+  li.lab {
+    width:120px;
+    text-align:right;
+    margin:0 0 0 10px;
+    font-size:13px;
   }
 }
 
@@ -138,12 +141,31 @@ button.alledit{
   background:url("alledit16.png");
 }
 
-button.update{
+@mixin saveButton {
   background:url('dbsave24.png');
   width:24px;
   height:24px;
   position:relative;
   float:left;
+  margin:-1px 0 0 8px;
+  cursor:pointer;
+}
+
+button.save {
+  @include saveButton;
+}
+
+ul.add_field li.button {
+  width:24px;
+  margin:0 0px 0 8px;
+  input {
+    border:none;
+    background:url('dbadd24.png');
+    width:24px;
+    height:24px;
+    color:transparent;
+    margin-left:8px;
+  }
 }
 
 button.add {
@@ -153,11 +175,8 @@ button.add {
 button.delete {
   background:url("delete16.png");
 }
+
 ul.add_field {
   position:relative;
   float:left;
 } 
-div.li {
-  position:relative;
-  float:left;
-}

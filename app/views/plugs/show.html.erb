@@ -14,57 +14,62 @@
   <ul class="show">
     <li class='lab'>Table: </li>
     <li><%= @plug.tab_name %></li>
-
     <li class='lab'>Parent: </li>
     <li><%= Plug.find(@plug.parent_id).legend  %></li>
   </ul>
 
   <div class='head'>Fields:</div>
 
+  <ul class='show labels'>
+    <li class='lab'>Label</li>
+    <li class='lab'>Dom Id</li>
+    <li class='lab'>Elm Type</li>
+    <li class='lab'>Exposure</li>
+  </ul>
+
   <% @plug.fields.each do |field| %>
     <div id="show_wrap<%= field.id %>" field_id="<%= field.id %>" >
       <ul class='show text'>
-        <li><button class="edit"></button></li>
-        <li><button class="delete"></button></li>
-        <li><button class="alledit"></button></li>
-        <li class='lab'>Label: </li>
         <li class='val field_label'><%= field.label %></li>
-        <li class='lab'>Dom Id: </li>
         <li class='val field_dom'><%= field.dom %></li>
-        <li class='lab'>Elm Type: </li>
         <li class='val field_elmtype_id' sel_id="<%= field.elmtype_id %>"><%= Elmtype.find(field.elmtype_id).description %></li>
-        <li class='lab'>Exposure: </li>
         <li class='val field_exposure_id' sel_id="<%= field.exposure_id %>"><%= Exposure.find(field.exposure_id).description %></li>
+
+        <li class='actions'><button class="edit"></button></li>
+        <li class='actions'><button class="delete"></button></li>
+        <li class='actions'><button class="alledit"></button></li>
       </ul>
-      <ul class='show form' >
-        <button class='update' style="display:none" />
-      </ul>
+      <ul class='show form'></ul>
     </div>
   <% end %>
 
   <div class='head'>Add Field:</div>
+
+  <ul class='show labels'>
+    <li class='lab'>Label</li>
+    <li class='lab'>Dom Id</li>
+    <li class='lab'>Elm Type</li>
+    <li class='lab'>Exposure</li>
+  </ul>
+
   <%= form_for([@plug, @plug.fields.build]) do |f| %>
-    <ul class='show add_field'>
-      <div class='fields_wrap'>
-        <li class="lab"><%= f.label "Label:" %></li>
-        <li class='val field_label'><%= f.text_field :label %></li>
-        <li class="lab"><%= f.label "Dom Id:" %></li>
-        <li class='val field_dom'><%= f.text_field :dom %></li>
-        <li class="lab">Elm Type:</li>
-        <li class='val field_elmtype_id'>
-          <%= f.select(:elmtype_id, Elmtype.find(:all).collect {|c| [c.description,c.id] }) %>
-        <li class="lab"><%= f.label "Exposure:" %></li>
-        <li class="val field_exposure_id">
-          <%= f.select(:exposure_id, Exposure.find(:all).collect {|c| [c.description,c.id] }) %>
-        </li>
-      </div>
-      <li class="actions">
-        <%= f.submit %>
+    <ul class='show add_field' field_id="new">
+      <li class='val field_label'><%= f.text_field :label %></li>
+      <li class='val field_dom'><%= f.text_field :dom %></li>
+      <li class='val field_elmtype_id'>
+        <%= f.select(:elmtype_id, Elmtype.find(:all).collect {|c| [c.description,c.id] }) %>
+      </li>
+      <li class="val field_exposure_id">
+        <%= f.select(:exposure_id, Exposure.find(:all).collect {|c| [c.description,c.id] }) %>
+      </li>
+      <li>
+        <button class='save' type='button' style="display:block"></button>
       </li>
     </ul>
   <% end %>
-
+<!--
   <br />
   <%= link_to 'Edit', edit_plug_path(@plug) %> |
   <%= link_to 'Back', plugs_path %>
+-->
 </div>

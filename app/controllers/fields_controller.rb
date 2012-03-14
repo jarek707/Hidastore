@@ -40,9 +40,14 @@ class FieldsController < ApplicationController
   # POST /fields
   # POST /fields.json
   def create
+    logger.debug "POSTING IN FIELD good"
     @plug = Plug.find(params[:plug_id])
     @field = @plug.fields.create(params[:field])
-    redirect_to plug_path(@plug)
+    #redirect_to plug_path(@plug)
+    @new_field = Field.find(:all, :order => 'created_at DESC', :limit=>1)
+    respond_to do |format|
+      format.json { render json: @new_field }
+    end
   end
 
   # PUT /fields/1
@@ -52,7 +57,7 @@ class FieldsController < ApplicationController
 
     respond_to do |format|
       if @field.update_attributes(params[:field])
-  logger.debug "PUTTING IN FIELD good"
+        logger.debug "PUTTING IN FIELD good"
         format.html { redirect_to @field, notice: 'Field was successfully updated.' }
         format.json { render json: params[:field] }
       else
