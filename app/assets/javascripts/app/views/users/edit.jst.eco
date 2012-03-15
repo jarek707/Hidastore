@@ -1,0 +1,54 @@
+<h1>Edit User</h1>
+
+<a data-type="back">Back</a>
+
+<form>
+  
+  <label>
+    <span>First</span>
+    <input 
+      type="text" name="first" 
+      value="<%= @first %>" required
+ autofocus>
+    <br />
+  </label>
+  
+  <label>
+    <span>Last</span>
+    <input 
+      type="text" name="last" 
+      value="<%= @last %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Email</span>
+    <input 
+      type="text" name="email" 
+      value="<%= @email %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Phone</span>
+    <input 
+      type="text" name="phone" 
+      value="<%= @phone %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Group</span>
+    <input 
+      type="text" name="group_id" 
+      value="<%= @group_id %>" required
+>
+    <br />
+  </label>
+  
+  <button>Edit</button>
+
+</form>

@@ -1,0 +1,6 @@
+<h1>Show Group</h1>
+
+<a data-type="edit">Edit</a> <a data-type="back">Back</a>
+
+<p>Descr: <%= @descr %></p>
+<p>Hex Val: <%= @hex_val %></p>

@@ -1,0 +1,27 @@
+<h1>New Group</h1>
+
+<a data-type="back">Back</a>
+
+<form>
+  
+  <label>
+    <span>Descr</span>
+    <input 
+      type="text" name="descr" 
+      value="<%= @descr %>" required
+ autofocus>
+    <br />
+  </label>
+  
+  <label>
+    <span>Hex Val</span>
+    <input 
+      type="text" name="hex_val" 
+      value="<%= @hex_val %>" required
+>
+    <br />
+  </label>
+  
+  <button>Create</button>
+
+</form>
