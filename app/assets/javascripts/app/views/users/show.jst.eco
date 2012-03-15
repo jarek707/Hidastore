@@ -1,9 +1,0 @@
-<h1>Show User</h1>
-
-<a data-type="edit">Edit</a> <a data-type="back">Back</a>
-
-<p>First: <%= @first %></p>
-<p>Last: <%= @last %></p>
-<p>Email: <%= @email %></p>
-<p>Phone: <%= @phone %></p>
-<p>Group: <%= @group_id %></p>

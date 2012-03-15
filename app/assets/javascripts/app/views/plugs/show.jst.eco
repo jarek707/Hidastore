@@ -1,8 +1,0 @@
-<h1>Show Plug</h1>
-
-<a data-type="edit">Edit</a> <a data-type="back">Back</a>
-
-<p>Tab Name: <%= @tab_name %></p>
-<p>Flags: <%= @flags %></p>
-<p>Legend: <%= @legend %></p>
-<p>Parent: <%= @parent_id %></p>
