@@ -27,21 +27,39 @@
     <li class='lab'>Exposure</li>
   </ul>
 
-  <% @plug.fields.each do |field| %>
-    <div id="show_wrap<%= field.id %>" field_id="<%= field.id %>" >
-      <ul class='show text'>
-        <li class='val field_label'><%= field.label %></li>
-        <li class='val field_dom'><%= field.dom %></li>
-        <li class='val field_elmtype_id' sel_id="<%= field.elmtype_id %>"><%= Elmtype.find(field.elmtype_id).description %></li>
-        <li class='val field_exposure_id' sel_id="<%= field.exposure_id %>"><%= Exposure.find(field.exposure_id).description %></li>
+  <div id="field_wrap">
+    <% @plug.fields.each do |field| %>
+      <div id="show_wrap<%= field.id %>" field_id="<%= field.id %>" >
+        <ul class='show text'>
+          <li class='val field_label'><%= field.label %></li>
+          <li class='val field_dom'><%= field.dom %></li>
+          <li class='val field_elmtype_id' sel_id="<%= field.elmtype_id %>"><%= Elmtype.find(field.elmtype_id).description %></li>
+          <li class='val field_exposure_id' sel_id="<%= field.exposure_id %>"><%= Exposure.find(field.exposure_id).description %></li>
 
-        <li class='actions'><button class="edit"></button></li>
-        <li class='actions'><button class="delete"></button></li>
-        <li class='actions'><button class="alledit"></button></li>
-      </ul>
-      <ul class='show form'></ul>
-    </div>
-  <% end %>
+          <li class='actions'><button class="edit"></button></li>
+          <li class='actions'><button class="delete"></button></li>
+          <li class='actions'><button class="alledit"></button></li>
+        </ul>
+        <ul class='show form'></ul>
+      </div>
+    <% end %>
+  </div>
+
+  <div id='_field_wrap' style='display:none'>
+      <div id="show_wrap" >
+        <ul class='show text'>
+          <li class='val field_label'></li>
+          <li class='val field_dom'></li>
+          <li class='val field_elmtype_id'></li>
+          <li class='val field_exposure_id'></li>
+
+          <li class='actions'><button class="edit"></button></li>
+          <li class='actions'><button class="delete"></button></li>
+          <li class='actions'><button class="alledit"></button></li>
+        </ul>
+        <ul class='show form'></ul>
+      </div>
+  </div>
 
   <div class='head'>Add Field:</div>
 

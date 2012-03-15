@@ -7,7 +7,17 @@ Trigger =
     true while typeof anc.attr( atr ) is 'undefined' and ( anc = anc.parent() ).length
     return if anc.length then anc.attr atr else false
 
-  ajax_update_return: ( in_container, data ) ->
+  after_delete: ( data ) ->
+    console.debug  'after delete'
+
+  after_post: ( in_container, data ) ->
+    data = data[0]
+    $("#field_wrap").append("<div id='show_wrap" + data.id + "' field_id='" + data.id + "'>" + $("#_field_wrap #show_wrap").html() + "</div>")
+    $("#show_wrap" + data.id + " button").bind 'click', -> Trigger.buttons this 
+    @after_put $("#show_wrap" + data.id), data
+    $('form.new_field ul.add_field li input').val ''
+
+  after_put: ( in_container, data ) ->
     if typeof data is 'undefined'
       alert  ("Error was encountered when updating record.")
     else
@@ -50,18 +60,18 @@ Trigger =
 
         when "save"
           if field_id is 'new' 
-            params = {method: 'POST', action:$("form.new_field").attr('action'), data:$("#new_field").serialize()}
+            ap = {method: 'post', url:$("form.new_field").attr('action'),                   data:$("#new_field").serialize()}
           else 
-            params = {method: 'PUT', action:$("form.new_field").attr('action') + '/' + field_id , data:$("#edit_form").serialize()}
+            ap = {method: 'put',  url:$("form.new_field").attr('action') + '/' + field_id , data:$("#edit_form").serialize()}
 
           thisO = @
           $.ajax {
-            type:     params.method, 
-            url:      params.action,
-            data:     params.data, 
+            type:     ap.method, 
+            url:      ap.url,
+            data:     ap.data, 
             dataType: "json",
-            success:  (data) -> thisO.ajax_update_return( in_container, data )
-            error:    (data) -> thisO.ajax_update_return( in_container       )
+            success:  (data) -> thisO["after_" + ap.method]( in_container, data )
+            error:    (data) -> thisO["after_" + ap.method]( in_container       )
           }
 
         when "delete" 
