@@ -15,7 +15,8 @@ class PlugsController < ApplicationController
   def show
     @plug = Plug.find(params[:id])
     logger.debug @plug.to_json()
-    @plugs = Plug.where("legend!='Root' AND legend!='Plugins' AND legend!='Fields'")
+    #@plugs = Plug.where("legend!='Root' AND legend!='Plugins' AND legend!='Fields'")
+    #@plugs = Plug.where("legend!='Root'")
 
     respond_to do |format|
       format.html # show.html.erb

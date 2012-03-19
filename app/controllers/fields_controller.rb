@@ -40,11 +40,9 @@ class FieldsController < ApplicationController
   # POST /fields
   # POST /fields.json
   def create
-    logger.debug "POSTING IN FIELD good"
     @plug = Plug.find(params[:plug_id])
     @field = @plug.fields.create(params[:field])
-    #redirect_to plug_path(@plug)
-    @new_field = Field.find(:all, :order => 'created_at DESC', :limit=>1)
+    @new_field = Field.find(:all, :order => 'created_at DESC', :limit=>1).pop()
     respond_to do |format|
       format.json { render json: @new_field }
     end
@@ -76,7 +74,7 @@ class FieldsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to fields_url }
-      format.json { render json: @field }
+      format.json { render json: @field.id }
     end
   end
 end

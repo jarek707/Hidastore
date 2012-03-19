@@ -102,13 +102,13 @@ Trigger =
     ( @config_params["#{key}"] = @reindex_by_id( data[0]["#{key}"] ) if 'fields' isnt "#{key}" ) for key of data[0]
 
 #Get config data
-$.ajax {
-  type:     'GET',
-  url:      '/siteparams/' + document.location.pathname.split('/').pop(),
-  dataType: "json",
-  success:  (data) -> Trigger.set_config_params data
-  error:    (data) -> console.debug  "Error getting site params"
-}
+#$.ajax {
+#  type:     'GET',
+#  url:      '/siteparams/' + document.location.pathname.split('/').pop(),
+# dataType: "json",
+# success:  (data) -> Trigger.set_config_params data
+# error:    (data) -> console.debug  "Error getting site params"
+#}
 
 #Bind buttons and focus on the first INPUT elm
 setTimeout ( -> $(":button").on "click", -> Trigger.buttons this ), 600

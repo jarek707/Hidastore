@@ -5,6 +5,9 @@
  *= require_self
  *= require_tree . 
 */
+.stack > *:not(.active) {
+  display: none;
+}
 
 body {
   background-color:#ddd !important;
@@ -35,6 +38,7 @@ div#leftPane {
 div#rightPane {
   @include paneDivs;
   margin-left:12px;
+  max-width:620px;
 }
 
 ul.show {

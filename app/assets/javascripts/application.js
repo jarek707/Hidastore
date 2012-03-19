@@ -6,4 +6,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require app
 //= require_tree .
+
+function log(arg) { console.debug(arg); }

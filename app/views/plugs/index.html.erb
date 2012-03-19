@@ -1,29 +1,9 @@
-<h1>All Plugs</h1>
+<div id="notice" class="notice"></div>
+<div id="apps"></div>
 
-<table>
-  <tr>
-    <th>Legend</th>
-    <th>Tab name</th>
-    <th>Flags</th>
-    <th>Parent</th>
-    <th></th>
-  </tr>
-
-<% @plugs.each do |plug| %>
-  <% if plug.legend != "Root" %>
-    <tr>
-      <td><%= plug.legend %></td>
-      <td><%= plug.tab_name %></td>
-      <td><%= plug.flags %></td>
-      <td><%= Plug.find(plug.parent_id).legend %></td>
-      <td><%= link_to 'Show', plug %></td>
-      <td><%= link_to 'Edit', edit_plug_path(plug) %></td>
-      <td><%= link_to 'Destroy', plug, confirm: 'Are you sure?', method: :delete %></td>
-    </tr>
-  <% end %>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Plug', new_plug_path %>
+<script type="text/javascript" charset="utf-8">
+  jQuery(function(){
+    // onready, instantiate App
+    new App({el: $("#apps")})
+  });
+</script>
