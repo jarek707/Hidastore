@@ -1,0 +1,90 @@
+<h1>Edit Field</h1>
+
+<a data-type="back">Back</a>
+
+<form>
+  
+  <label>
+    <span>Dom</span>
+    <input 
+      type="text" name="dom" 
+      value="<%= @dom %>" required
+ autofocus>
+    <br />
+  </label>
+  
+  <label>
+    <span>Flags</span>
+    <input 
+      type="text" name="flags" 
+      value="<%= @flags %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Xml</span>
+    <input 
+      type="text" name="xml" 
+      value="<%= @xml %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Plug</span>
+    <input 
+      type="text" name="plug_id" 
+      value="<%= @plug_id %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Label</span>
+    <input 
+      type="text" name="label" 
+      value="<%= @label %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Vflag</span>
+    <input 
+      type="text" name="vflag" 
+      value="<%= @vflag %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Elmtype</span>
+    <input 
+      type="text" name="elmtype_id" 
+      value="<%= @elmtype_id %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Exposure</span>
+    <input 
+      type="text" name="exposure_id" 
+      value="<%= @exposure_id %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Seq</span>
+    <input 
+      type="text" name="seq" 
+      value="<%= @seq %>" required
+>
+    <br />
+  </label>
+  
+  <button>Edit</button>
+
+</form>

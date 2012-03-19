@@ -84,6 +84,15 @@ ul.show {
       overlay:hidden;
     }
   }
+  
+  li.actions button {
+    opacity:0.6;
+    cursor:pointer;
+  }
+  
+  li.actions button:hover, li.actions button:focus {
+    opacity:1;
+  }
 
   li.show {
     background:url("view32.png");

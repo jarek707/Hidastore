@@ -1,0 +1,16 @@
+<div style='clear:both; width:99%'>
+	<a data-type="new">New</a>
+  <a data-type="edit">Edit</a>
+ i<a data-type="back">Back</a>
+</div>
+
+<div id='leftPane'>
+  <div class='head'>Plugins:</div>
+    <% for plug in @plugs: %>
+      <div class="item" data-id="<%= plug.id %>">
+        <ul class='show'>
+        <li><a data-type="show"><%= plug.tab_name %></a></li>
+      </div>
+    </ul>
+  <% end %>
+</div>

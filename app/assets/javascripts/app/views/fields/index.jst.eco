@@ -1,0 +1,10 @@
+<% for field in @fields: %>
+  <div class="item" data-id="<%= field.id %>">
+    <a data-type="show"><%= field.dom %></a>
+    
+    <a data-type="edit">Edit</a> 
+    <a data-type="destroy">Destroy</a>
+  </div>
+<% end %>
+
+<p><a data-type="new">New Field</a></p>

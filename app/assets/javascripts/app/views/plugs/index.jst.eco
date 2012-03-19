@@ -1,0 +1,15 @@
+<div style='width:79%; position:absolute; top:8px; color:blue;'>
+	<a data-type="new">New</a>
+<!-- <a data-type="edit">Edit</a> -->
+</div>
+
+<div id='leftPane'>
+  <div class='head'>Plugins:</div>
+    <% for plug in @plugs: %>
+      <div class="item" data-id="<%= plug.id %>">
+        <ul class='show'>
+        <li><a data-type="show"><%= plug.legend %></a></li>
+      </div>
+    </ul>
+  <% end %>
+</div>
