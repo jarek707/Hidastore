@@ -70,27 +70,26 @@ class Show extends Spine.Controller
   constructor: ->
     super
     Field.fetch()
-    thisO = @
+    O = @
     @active (params) ->
-      setTimeout ( -> thisO.change(params.id) ), 200  # for now it works
+      setTimeout ( -> O.change(params.id) ), 300 # TODO for now it works
 
   change: (id) ->
     try 
-    #if true
-      Field.bind 'refresh change', @proxy(@render)
-      Plug.bind 'refresh change', @proxy(@render)
+      Field.bind 'refresh change', @proxy @render
+      Plug.bind  'refresh change', @proxy @render
       @item = Plug.find(id)
       @render()
     catch e
-      log [ 'Waiting for data', e ]
+      log [ 'Waiting for data or somthn', e ]
 
   render: ->
     @item.helper = 
       subSelect: ( domId, val ) ->
-        App.SelSource.getText(domId,val)
+        App.SelSource.getText domId,val
 
-    @html @view('plugs/show')(@item)
-    App.SelSource.initSelects 'form.field'
+    @html @view('plugs/show') @item
+    App.SelSource.initSelects()
 
   edit: ->
     @navigate '/plugs', @item.id, 'edit'
@@ -100,14 +99,9 @@ class Show extends Spine.Controller
     $('#rightPane div.text').show()
     $('#rightPane div.input form li').remove()
 
-    el = new App.El e.target,'data-id'
-    el.copy_html().text_to_input().hide_text()
-
-  back: ->
-    @navigate '/plugs'
+    ( new App.El e.target,'data-id' ).copy_html().text_to_input().hide_text()
 
   saveField: (e) ->
-    #TODO
     e.preventDefault()
     $.extend( Field.fromForm(e.target), { plug_id : @item.id } ).save()
     @navigate '/plugs/' , @item.id

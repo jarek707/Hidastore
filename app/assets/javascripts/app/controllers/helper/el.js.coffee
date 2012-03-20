@@ -1,6 +1,7 @@
+# Keep ugly stuff here
 class Tpls
   @option: ( id, val ) ->
-    "<option value='" + id + "'>" + val + "</option>"
+    '<option value="' + id + '">' + val + '</option>'
   @id_input: ( type, id ) ->
     '<input type="' + type + '" name="id" value="' + id + '"></input>'
 
@@ -23,17 +24,19 @@ class SelSource
         url: "siteparams",
         dataType: 'json',
         success: (data) ->
-          $.each( data, ( (key,val) -> SelSource.reindex_data(key,val) ) )
+          $.each( data, (key, val) -> SelSource.reindex_data key,val )
       )
+
+  @initSelects: ( form ) ->
+    form ?= 'form.field'
+
+    src = @src
+    for el in $(form + " select ")
+      do (el) ->
+        $.each(src[el.name], (id,val) -> $(el).append(Tpls.option id,val) )
 
   @getText: ( selId, val ) ->
     return  @src[selId][val]
-
-  @initSelects: ( form ) ->
-      src = @src
-      for el in $(form + " select ")
-        do (el) ->
-          $.each(src[el.name], ( (id,val) -> $(el).append(Tpls.option(id,val)) ) )
 
 class ElContainer
   container: false
@@ -60,7 +63,7 @@ class ElContainer
 
     outter = @container.find(to).html $(from).html()
     if addId
-      outter.append( Tpls.id_input( 'hidden', @container.attr('data-id') ) )
+      outter.append Tpls.id_input( 'hidden', @container.attr 'data-id' )
     return @
 
   text_to_input: ( from, to ) ->
@@ -73,8 +76,10 @@ class ElContainer
   set_input: ( inEl, from ) ->
     if inEl.name isnt ''
       switch inEl.type
-        when 'select-one' then $(inEl).val @container.find(from + ' li.' + inEl.name).attr('sel_id')
-        when 'text'       then $(inEl).val @container.find(from + ' li.' + inEl.name).html()
+        when 'select-one'
+          $(inEl).val @container.find(from + ' li.' + inEl.name).attr 'sel_id'
+        when 'text'
+          $(inEl).val @container.find(from + ' li.' + inEl.name).html()
 
 class El extends ElContainer
   target: false
