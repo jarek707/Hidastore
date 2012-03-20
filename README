@@ -1,4 +1,5 @@
 In mysql:
-  <b>CREATE DATABASE hs</b>
+  
+CREATE DATABASE hs
 
 And it should work.
