@@ -90,7 +90,6 @@ class Show extends Spine.Controller
         App.SelSource.getText(domId,val)
 
     @html @view('plugs/show')(@item)
-    $('#rightPane').hide().fadeIn(300)
     App.SelSource.initSelects 'form.field'
 
   edit: ->
