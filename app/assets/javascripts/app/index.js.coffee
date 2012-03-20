@@ -10,6 +10,7 @@
 #= require_self
 #= require_tree ./models
 #= require_tree ./controllers
+#= require_tree ./controllers/helper
 #= require_tree ./views
 
 class App extends Spine.Controller

@@ -21,10 +21,10 @@
 		<% for fld in @fields().all(): %>
 			<ul class='show item' data-id="<%= fld.id %>">
 			  <div class='text'>
-					<li class='val'><%= fld.label %></li>
-					<li class='val'><%= fld.dom %></li>
-					<li class='val'><%= fld.elmtype_id %></li>
-					<li class='val'><%= fld.exposure_id %></li>
+					<li class='val label'><%= fld.label %></li>
+					<li class='val dom'><%= fld.dom %></li>
+					<li class='val elmtype_id' sel_id='<%= fld.elmtype_id %>'><%= @helper.subSelect("elmtype_id",fld.elmtype_id) %></li>
+					<li class='val exposure_id' sel_id='<%= fld.exposure_id %>'><%= @helper.subSelect("exposure_id",fld.exposure_id ) %></li>
 
 					<li class='actions'><button data-type='editField' class="edit"></button></li>
 					<li class='actions'><button data-type='destroyField' class="delete"></button></li>
@@ -45,10 +45,10 @@
   </ul>
 	<form class='field'>
 			<ul class='show add_field' field_id="new">
-				<li class='val field_label'><input type='text' name='label' value='' autofocus></li>
-				<li class='val field_dom'><input type='text' name='dom' value=''></li>
-				<li class='val field_elmtype_id'><input type='text' name='elmtype_id' value=''></li>
-				<li class="val field_exposure_id"><input type='text' name='exposure_id' value=''></li>
+				<li class='val'><input type='text' name='label' value='' autofocus></li>
+				<li class='val'><input type='text' name='dom' value=''></li>
+				<li class='val'><select name='elmtype_id' /></li>
+				<li class="val"><select name='exposure_id' /></li>
 				<li class='actions'><button type='submit' class='save' style='color : transparent'>Create</button></li>
 			</ul>
 	</form>

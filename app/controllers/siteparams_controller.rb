@@ -4,23 +4,29 @@ class SiteparamsController < ApplicationController
   def index
     @exposures = Exposure.all
     @elmtypes  = Elmtype.all
-    @fields    = Field.all()
 
     respond_to do |format|
-      format.html { render xml: [ "elmtypes" => @elmtypes , "exposures" => @exposures , "fields" => @fields ] }
-      format.json { render json: [ "elmtypes" => @elmtypes , "exposures" => @exposures , "fields" => @fields ] }
+      format.html { render xml: [ "elmtype_id" => @elmtypes , "exposure_id" => @exposures ] }
+      format.json { render json: { "elmtype_id" => @elmtypes , "exposure_id" => @exposures } }
+    end
+  end
+
+  def selects 
+    @exposures = Exposure.all
+    @elmtypes  = Elmtype.all
+
+    respond_to do |format|
+      format.json { render json: [ "elmtypes" => @elmtypes , "exposures" => @exposures ] }
     end
   end
 
   def show 
-    @exposures = Exposure.all
-    @elmtypes  = Elmtype.all
     @fields    = Field.where("plug_id=" + params[:id])
 
     respond_to do |format|
-      format.html { render json: [ "elmtypes" => @elmtypes , "exposures" => @exposures , "fields" => @fields ] }
-      format.json { render json: [ "elmtypes" => @elmtypes , "exposures" => @exposures , "fields" => @fields ] }
-      format.xml  #{ render xml: [ 'elms' =>@elmtypes , 'fields' => @fields ] }
+      format.html { render json: [ "fields" => @fields ] }
+      format.json { render json: [ "fields" => @fields ] }
+      format.xml  #{ render xml: [ 'fields' => @fields ] }
     end
   end
 end

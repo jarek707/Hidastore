@@ -76,26 +76,34 @@ class Show extends Spine.Controller
 
   change: (id) ->
     try 
+    #if true
       Field.bind 'refresh change', @proxy(@render)
       Plug.bind 'refresh change', @proxy(@render)
       @item = Plug.find(id)
       @render()
     catch e
-      log 'Waiting for data'
+      log [ 'Waiting for data', e ]
 
   render: ->
+    @item.helper = 
+      subSelect: ( domId, val ) ->
+        App.SelSource.getText(domId,val)
+
     @html @view('plugs/show')(@item)
     $('#rightPane').hide().fadeIn(300)
+    App.SelSource.initSelects 'form.field'
 
   edit: ->
     @navigate '/plugs', @item.id, 'edit'
 
   editField: (e) ->
-    #TODO - way too ugly
-    ulEl=$(e.target).parent().parent().parent()
-    ulEl.find('form').append($('#rightPane form ul').html())
-      .append('<input type="hidden" name="id" value="' + ulEl.attr('data-id') + '"></input>')
-    ulEl.find('div.text').hide()
+    # Cleanup after last incompleted open
+    $('#rightPane div.text').show()
+    $('#rightPane div.input form li').remove()
+
+    el = new App.El e.target,'data-id'
+    el.copy_html().text_to_input().hide_text()
+
   back: ->
     @navigate '/plugs'
 
