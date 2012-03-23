@@ -10,3 +10,4 @@
 //= require_tree .
 
 function log(arg) { console.debug(arg); }
+App.Selects.load()

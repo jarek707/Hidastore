@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120313073227) do
+ActiveRecord::Schema.define(:version => 20120321210841) do
+
+  create_table "ctrls", :force => true do |t|
+    t.string   "uc_tab"
+    t.string   "lc_tab"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "elmtypes", :force => true do |t|
     t.string   "flag"
@@ -38,12 +45,13 @@ ActiveRecord::Schema.define(:version => 20120313073227) do
     t.integer  "vflag"
     t.integer  "elmtype_id"
     t.integer  "exposure_id"
+    t.integer  "seq"
   end
 
   add_index "fields", ["plug_id"], :name => "index_fields_on_plug_id"
 
   create_table "groups", :force => true do |t|
-    t.string   "desc"
+    t.string   "descr"
     t.string   "hex_val"
     t.datetime "created_at"
     t.datetime "updated_at"

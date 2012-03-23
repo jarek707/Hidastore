@@ -1,0 +1,2 @@
+module Disk
+end

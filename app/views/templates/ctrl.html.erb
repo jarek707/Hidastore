@@ -1,0 +1,80 @@
+class <%= @ctrl.uc_tab %>sController < ApplicationController
+  # GET /<%= @ctrl.lc_tab %>s
+  # GET /<%= @ctrl.lc_tab %>s.json
+  def index
+    @<%= @ctrl.lc_tab %>s = <%= @ctrl.uc_tab %>.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @<%= @ctrl.lc_tab %>s }
+    end
+  end
+
+  # GET /<%= @ctrl.lc_tab %>s/1
+  # GET /<%= @ctrl.lc_tab %>s/1.json
+  def show
+    @<%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @<%= @ctrl.lc_tab %> }
+    end
+  end
+
+  # GET /<%= @ctrl.lc_tab %>s/new
+  # GET /<%= @ctrl.lc_tab %>s/new.json
+  def new
+    @<%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @<%= @ctrl.lc_tab %> }
+    end
+  end
+
+  # GET /<%= @ctrl.lc_tab %>s/1/edit
+  def edit
+    @<%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.find(params[:id])
+  end
+
+  # POST /<%= @ctrl.lc_tab %>s
+  # POST /<%= @ctrl.lc_tab %>s.json
+  def create
+    @plug = Plug.find(params[:plug_id])
+    @<%= @ctrl.lc_tab %> = @plug.<%= @ctrl.lc_tab %>s.create(params[:<%= @ctrl.lc_tab %>])
+    @new_<%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.find(:all, :order => 'created_at DESC', :limit=>1).pop()
+    respond_to do |format|
+      format.json { render json: @new_<%= @ctrl.lc_tab %> }
+    end
+  end
+
+  # PUT /<%= @ctrl.lc_tab %>s/1
+  # PUT /<%= @ctrl.lc_tab %>s/1.json
+  def update
+    @<%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.find(params[:id])
+
+    respond_to do |format|
+      if @<%= @ctrl.lc_tab %>.update_attributes(params[:<%= @ctrl.lc_tab %>])
+        logger.debug "PUTTING IN FIELD good"
+        format.html { redirect_to @<%= @ctrl.lc_tab %>, notice: '<%= @ctrl.uc_tab %> was successfully updated.' }
+        format.json { render json: params[:<%= @ctrl.lc_tab %>] }
+      else
+  logger.debug "PUTTING IN FIELD error"
+        format.html { render action: "edit" }
+        format.json { render json: @<%= @ctrl.lc_tab %>.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /<%= @ctrl.lc_tab %>s/1
+  # DELETE /<%= @ctrl.lc_tab %>s/1.json
+  def destroy
+    @<%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.find(params[:id])
+    @<%= @ctrl.lc_tab %>.destroy
+
+    respond_to do |format|
+      format.html { redirect_to <%= @ctrl.lc_tab %>s_url }
+      format.json { render json: @<%= @ctrl.lc_tab %>.id }
+    end
+  end
+end

@@ -7,6 +7,7 @@ class PlugsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @plugs }
+      format.xml # { render json: @plugs }
     end
   end
 
@@ -14,7 +15,6 @@ class PlugsController < ApplicationController
   # GET /plugs/1.json
   def show
     @plug = Plug.find(params[:id])
-    logger.debug @plug.to_json()
     #@plugs = Plug.where("legend!='Root' AND legend!='Plugins' AND legend!='Fields'")
     #@plugs = Plug.where("legend!='Root'")
 
@@ -49,10 +49,11 @@ class PlugsController < ApplicationController
   # POST /plugs.json
   def create
     @plug = Plug.new(params[:plug])
-    @plug.generate (params[:plug])
 
     respond_to do |format|
       if @plug.save
+        @tpl = Tpl.new params, request
+        @tpl.run
         format.html { redirect_to @plug, notice: 'Plug was successfully created.' }
         format.json { render json: @plug, status: :created, location: @plug }
       else

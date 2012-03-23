@@ -1,22 +1,18 @@
 Hs::Application.routes.draw do
 
   resources :exposures
-
-  resources :siteparams
-
   resources :elmtypes
-
   #resources :plugs do
     #resources :fields
   #end
   resources :plugs
   resources :fields
-
   resources :users
-
   resources :groups
+  root :to => 'plugs#index'
 
-  get "home/index"
+  match "params/:action", :controller=>'siteparams', :action => /[a-z_]+/i
+  match "templates/:action", :controller=>'templates', :action => /[a-z_]+/i
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -67,7 +63,6 @@ Hs::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'plugs#index'
 
   # See how all your routes lay out with "rake routes"
 

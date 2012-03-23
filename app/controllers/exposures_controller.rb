@@ -3,6 +3,7 @@ class ExposuresController < ApplicationController
   # GET /exposures.json
   def index
     @exposures = Exposure.all
+    $jlog.debug @exposures.inspect
 
     respond_to do |format|
       format.html # index.html.erb

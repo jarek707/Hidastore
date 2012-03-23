@@ -1,0 +1,15 @@
+class App.<%= @ctrl.lc_tab %> extends Spine.Model
+  @configure '<%= @ctrl.lc_tab %>', 'dom', 'flags', 'xml', 'plug_id', 'label', 'vflag', 'elmtype_id', 'exposure_id', 'seq'
+  @belongsTo 'plug', 'Plug'
+
+  @extend Spine.Model.Ajax
+
+  destroy: ->
+    super
+
+  @updateAttributes: (atts, options) ->
+    log  [ atts , options ]
+    super
+
+
+window.<%= @ctrl.lc_tab %>=App.<%= @ctrl.lc_tab %>

@@ -55,7 +55,7 @@ class Edit extends Spine.Controller
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    @navigate '/plugs'
+    #@navigate '/plugs'
 
 class Show extends Spine.Controller
   events:
@@ -69,27 +69,29 @@ class Show extends Spine.Controller
 
   constructor: ->
     super
-    Field.fetch()
     O = @
     @active (params) ->
+      log [ params ]
+      Field.fetch({plug_id:params.id})
       setTimeout ( -> O.change(params.id) ), 300 # TODO for now it works
 
   change: (id) ->
-    try 
+    #try 
+    if  true
       Field.bind 'refresh change', @proxy @render
       Plug.bind  'refresh change', @proxy @render
       @item = Plug.find(id)
       @render()
-    catch e
-      log [ 'Waiting for data or somthn', e ]
+    #catch e
+    #  log [ 'Waiting for data or somthn', e ]
 
   render: ->
     @item.helper = 
       subSelect: ( domId, val ) ->
-        App.SelSource.getText domId,val
+        App.Selects.getText domId,val
 
     @html @view('plugs/show') @item
-    App.SelSource.initSelects()
+    App.Selects.init()
 
   edit: ->
     @navigate '/plugs', @item.id, 'edit'
@@ -104,12 +106,12 @@ class Show extends Spine.Controller
   saveField: (e) ->
     e.preventDefault()
     $.extend( Field.fromForm(e.target), { plug_id : @item.id } ).save()
-    @navigate '/plugs/' , @item.id
+    @navigate '/plugs' , @item.id
 
   destroy: (e) ->
     item = $(e.target).item()
     item.destroy() if confirm('sure?')
-    @navigate '/plugs/'
+    @navigate '/plugs'
 
   destroyField: (e) ->
     item = $(e.target).parent().fieldItem()

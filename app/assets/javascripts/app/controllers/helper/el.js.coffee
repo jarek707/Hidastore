@@ -1,42 +1,24 @@
-# Keep ugly stuff here
-class Tpls
-  @option: ( id, val ) ->
-    '<option value="' + id + '">' + val + '</option>'
-  @id_input: ( type, id ) ->
-    '<input type="' + type + '" name="id" value="' + id + '"></input>'
-
-class SelSource
+class Selects
   @src: false
 
-  @reindex_by_id: (arg) ->
-    rO = {}
-    rO[o.id] = o.description for o in arg
-    return rO
+  @loadParams: (data) ->
+    $.each( data, (key, val) -> Selects.src[key] = JQ.reindex_by_id val )
 
-  @reindex_data: (key, data) ->
-    @src = {} if not @src
-    @src[key] = @reindex_by_id data
-    
   @load: ->
     if not @src
-      $.ajax(
-        type: 'GET',
-        url: "siteparams",
-        dataType: 'json',
-        success: (data) ->
-          $.each( data, (key, val) -> SelSource.reindex_data key,val )
-      )
+      @src = {}
+      JQ.get '/params/selects', Selects.loadParams
 
-  @initSelects: ( form ) ->
+  @init: ( form ) ->
     form ?= 'form.field'
 
     src = @src
     for el in $(form + " select ")
       do (el) ->
-        $.each(src[el.name], (id,val) -> $(el).append(Tpls.option id,val) )
+        $.each(src[el.name], (id,val) -> $(el).append( JQ.tpl.option id,val) )
 
   @getText: ( selId, val ) ->
-    return  @src[selId][val]
+    return if @src[selId] then @src[selId][val] else 'noLabel'
 
 class ElContainer
   container: false
@@ -63,7 +45,7 @@ class ElContainer
 
     outter = @container.find(to).html $(from).html()
     if addId
-      outter.append Tpls.id_input( 'hidden', @container.attr 'data-id' )
+      outter.append JQ.tpl.id_input( 'hidden', @container.attr 'data-id' )
     return @
 
   text_to_input: ( from, to ) ->
@@ -93,5 +75,4 @@ class El extends ElContainer
 
 window.App.El          = El
 window.App.ElContainer = ElContainer
-window.App.SelSource   = SelSource
-SelSource.load()
+window.App.Selects = Selects 
