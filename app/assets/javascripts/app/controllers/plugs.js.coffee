@@ -30,7 +30,7 @@ class New extends Spine.Controller
   submit: (e) ->
     e.preventDefault()
     plug = Plug.fromForm(e.target).save()
-    @navigate '/plugs', plug.id if plug
+    @navigate '/plugs/new'
 
 class Edit extends Spine.Controller
   events:
