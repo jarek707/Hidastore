@@ -1,2 +1,9 @@
-<h1>Template#migr</h1>
-<p>Find me in app/views/template/migr.html.erb</p>
+class Create<%= uc_tab %>s < ActiveRecord::Migration
+  def change
+    create_table :<%= lc_tab %>s do |t|
+      t.integer :parent_id
+
+      t.timestamps
+    end
+  end
+end

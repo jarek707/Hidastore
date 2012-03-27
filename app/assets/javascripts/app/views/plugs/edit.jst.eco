@@ -1,45 +1,21 @@
-<h1>Edit Plug</h1>
+<div id='rightPane'>
+  <div class='head'><%= @legend %>
+    <button class='back' data-type="back">Back</button>
+  </div>
 
-<a data-type="back">Back</a>
-
+  <ul class='show labels'>
+    <li class='lab'>Tab Name</li>
+    <li class='lab'>Flags</li>
+    <li class='lab'>Legend</li>
+    <li class='lab'>Parent</li>
+  </ul>
 <form>
-  
-  <label>
-    <span>Tab Name</span>
-    <input 
-      type="text" name="tab_name" 
-      value="<%= @tab_name %>" required
- autofocus>
-    <br />
-  </label>
-  
-  <label>
-    <span>Flags</span>
-    <input 
-      type="text" name="flags" 
-      value="<%= @flags %>" required
->
-    <br />
-  </label>
-  
-  <label>
-    <span>Legend</span>
-    <input 
-      type="text" name="legend" 
-      value="<%= @legend %>" required
->
-    <br />
-  </label>
-  
-  <label>
-    <span>Parent</span>
-    <input 
-      type="text" name="parent_id" 
-      value="<%= @parent_id %>" required
->
-    <br />
-  </label>
-  
-  <button>Edit</button>
-
+  <ul class='show item'>
+    <li class='val'><input type="text" name="tab_name" value="<%= @tab_name %>" required autofocus></li>
+    <li class='val'><input type="text" name="flags" value="<%= @flags %>" required ></li>
+    <li class='val'><input type="text" name="legend" value="<%= @legend %>" required ></li>
+    <li class='val'><input type="text" name="parent_id" value="<%= @parent_id %>" required ></li>
+    <li class='actions'><button class='save' style='color:transparent;'>Create</button></li>
+  </ul>
 </form>
+</div>

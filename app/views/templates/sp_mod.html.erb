@@ -1,5 +1,5 @@
-class App.<%= @ctrl.lc_tab %> extends Spine.Model
-  @configure '<%= @ctrl.lc_tab %>', 'dom', 'flags', 'xml', 'plug_id', 'label', 'vflag', 'elmtype_id', 'exposure_id', 'seq'
+class App.<%= uc_tab %> extends Spine.Model
+  @configure '<%= uc_tab %>', 'dom', 'flags', 'xml', 'plug_id', 'label', 'vflag', 'elmtype_id', 'exposure_id', 'seq'
   @belongsTo 'plug', 'Plug'
 
   @extend Spine.Model.Ajax
@@ -12,4 +12,4 @@ class App.<%= @ctrl.lc_tab %> extends Spine.Model
     super
 
 
-window.<%= @ctrl.lc_tab %>=App.<%= @ctrl.lc_tab %>
+window.<%= uc_tab %>=App.<%= uc_tab %>

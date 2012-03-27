@@ -22,6 +22,7 @@ class New extends Spine.Controller
     @active @render
     
   render: ->
+    log [ ' render new ' ]
     @html @view('plugs/new')
 
   back: ->
@@ -47,15 +48,16 @@ class Edit extends Spine.Controller
     @render()
     
   render: ->
+    log [ ' render edit' ]
     @html @view('plugs/edit')(@item)
 
   back: ->
-    @navigate '/plugs'
+    @navigate '/plugs', @item.id
 
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    #@navigate '/plugs'
+    @navigate '/plugs', @item.id
 
 class Show extends Spine.Controller
   events:
@@ -64,16 +66,28 @@ class Show extends Spine.Controller
     'click [data-type=destroyField]': 'destroyField'
     'click [data-type=destroy]': 'destroy'
     'click [data-type=editField]': 'editField'
+    'click [data-type=showHide]': 'showHide'
     'click [data-type=newField]': 'newField'
     'submit form.field': 'saveField'
 
+  showHide:(e) ->
+    targetDiv = $('#' + $(e.target).attr('target'))
+    if $(targetDiv).is ":hidden"
+      $(targetDiv).slideDown 'fast'
+      $(e.target).fadeOut('fast', ( -> $(this).addClass('opened'); $(this).fadeIn('slow') ) )
+    else
+      $(targetDiv).fadeOut 'fast'
+      $(e.target).fadeOut('fast', ( -> $(this).removeClass('opened'); $(this).fadeIn('slow') ) )
+    
   constructor: ->
     super
     O = @
     @active (params) ->
-      log [ params ]
       Field.fetch({plug_id:params.id})
       setTimeout ( -> O.change(params.id) ), 300 # TODO for now it works
+
+      #@fieldsCtrl = new App({el: $("#appFields")})
+      #@fieldsCtrl.append( this.fields = new App.Fields )
 
   change: (id) ->
     #try 
@@ -86,6 +100,7 @@ class Show extends Spine.Controller
     #  log [ 'Waiting for data or somthn', e ]
 
   render: ->
+    log [ ' render show' ]
     @item.helper = 
       subSelect: ( domId, val ) ->
         App.Selects.getText domId,val
@@ -122,7 +137,7 @@ class Index extends Spine.Controller
     'click [data-type=edit]':    'edit'
     'click [data-type=destroy]': 'destroy'
     'click [data-type=show]':    'show'
-    'click [data-type=new]':     'new'
+    'click button.new':     'new'
 
   constructor: ->
     super
@@ -136,11 +151,8 @@ class Index extends Spine.Controller
     # Always keep index on page
 
   render: =>
-    try 
-      plugs  = Plug.all()
-      @html @view('plugs/index')(plugs: plugs)
-    catch e
-      log [ e ]
+    log [ ' render Index' , Spine.Stack ]
+    @html @view('plugs/index') items: Plug.all()
 
   edit: (e) ->
     item = $(e.target).item()
@@ -171,4 +183,9 @@ class App.Plugs extends Spine.Stack
     '/plugs':          'index'
     
   default: 'index'
-  className: 'stack plugs'
+  #className: 'stack plugs'
+
+#$ ->
+#  app = new App {el: $("#apps")}
+#  app.append( @items = new App.Plugs )
+#  log [ 'in plugs spine controller' ,  app ]

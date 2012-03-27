@@ -1,5 +1,6 @@
 Hs::Application.routes.draw do
 
+  resources :tucs
   resources :exposures
   resources :elmtypes
   #resources :plugs do

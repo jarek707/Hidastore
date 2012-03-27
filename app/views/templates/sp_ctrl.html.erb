@@ -1,10 +1,10 @@
 $ = jQuery.sub()
-<%= @ctrl.uc_tab %> = App.<%= @ctrl.uc_tab %>
+<%= uc_tab %> = App.<%= uc_tab %>
 
 $.fn.item = ->
   elementID   = $(@).data('id')
   elementID or= $(@).parents('[data-id]').data('id')
-  <%= @ctrl.uc_tab %>.find(elementID)
+  <%= uc_tab %>.find(elementID)
 
 class New extends Spine.Controller
   events:
@@ -16,15 +16,15 @@ class New extends Spine.Controller
     @active @render
     
   render: ->
-    @html @view('<%= @ctrl.lc_tab %>s/new')
+    @html @view('<%= lc_tab %>s/new')
 
   back: ->
-    @navigate '/<%= @ctrl.lc_tab %>s'
+    @navigate '/<%= lc_tab %>s'
 
   submit: (e) ->
     e.preventDefault()
-    <%= @ctrl.lc_tab %> = <%= @ctrl.uc_tab %>.fromForm(e.target).save()
-#    @navigate '/<%= @ctrl.lc_tab %>s', <%= @ctrl.lc_tab %>.id if <%= @ctrl.lc_tab %>
+    <%= lc_tab %> = <%= uc_tab %>.fromForm(e.target).save()
+#    @navigate '/<%= lc_tab %>s', <%= lc_tab %>.id if <%= lc_tab %>
     return false
 
 class Edit extends Spine.Controller
@@ -38,19 +38,19 @@ class Edit extends Spine.Controller
       @change(params.id)
       
   change: (id) ->
-    @item = <%= @ctrl.uc_tab %>.find(id)
+    @item = <%= uc_tab %>.find(id)
     @render()
     
   render: ->
-    @html @view('<%= @ctrl.lc_tab %>s/edit')(@item)
+    @html @view('<%= lc_tab %>s/edit')(@item)
 
   back: ->
-    @navigate '/<%= @ctrl.lc_tab %>s'
+    @navigate '/<%= lc_tab %>s'
 
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    @navigate '/<%= @ctrl.lc_tab %>s'
+    @navigate '/<%= lc_tab %>s'
 
 class Show extends Spine.Controller
   events:
@@ -63,17 +63,17 @@ class Show extends Spine.Controller
       @change(params.id)
 
   change: (id) ->
-    @item = <%= @ctrl.uc_tab %>.find(id)
+    @item = <%= uc_tab %>.find(id)
     @render()
 
   render: ->
-    @html @view('<%= @ctrl.lc_tab %>s/show')(@item)
+    @html @view('<%= lc_tab %>s/show')(@item)
 
   edit: ->
-    @navigate '/<%= @ctrl.lc_tab %>s', @item.id, 'edit'
+    @navigate '/<%= lc_tab %>s', @item.id, 'edit'
 
   back: ->
-    @navigate '/<%= @ctrl.lc_tab %>s'
+    @navigate '/<%= lc_tab %>s'
 
 class Index extends Spine.Controller
   events:
@@ -84,16 +84,16 @@ class Index extends Spine.Controller
 
   constructor: ->
     super
-    <%= @ctrl.uc_tab %>.bind 'refresh change', @render
-    <%= @ctrl.uc_tab %>.fetch()
+    <%= uc_tab %>.bind 'refresh change', @render
+    <%= uc_tab %>.fetch()
     
   render: =>
-    #<%= @ctrl.lc_tab %>s = <%= @ctrl.uc_tab %>.all()
-    #@html @view('<%= @ctrl.lc_tab %>s/index')(<%= @ctrl.lc_tab %>s: <%= @ctrl.lc_tab %>s)
+    #<%= lc_tab %>s = <%= uc_tab %>.all()
+    #@html @view('<%= lc_tab %>s/index')(<%= lc_tab %>s: <%= lc_tab %>s)
     
   edit: (e) ->
     item = $(e.target).item()
-    @navigate '/<%= @ctrl.lc_tab %>s', item.id, 'edit'
+    @navigate '/<%= lc_tab %>s', item.id, 'edit'
     
   destroy: (e) ->
     item = $(e.target).item()
@@ -101,12 +101,12 @@ class Index extends Spine.Controller
     
   show: (e) ->
     item = $(e.target).item()
-    @navigate '/<%= @ctrl.lc_tab %>s', item.id
+    @navigate '/<%= lc_tab %>s', item.id
     
   new: ->
-    @navigate '/<%= @ctrl.lc_tab %>s/new'
+    @navigate '/<%= lc_tab %>s/new'
     
-class App.<%= @ctrl.uc_tab %>s extends Spine.Stack
+class App.<%= uc_tab %>s extends Spine.Stack
   controllers:
     index: Index
     edit:  Edit
@@ -114,10 +114,10 @@ class App.<%= @ctrl.uc_tab %>s extends Spine.Stack
     new:   New
     
   routes:
-    '/<%= @ctrl.lc_tab %>s/new':      'new'
-    '/<%= @ctrl.lc_tab %>s/:id/edit': 'edit'
-    '/<%= @ctrl.lc_tab %>s/:id':      'show'
-    '/<%= @ctrl.lc_tab %>s':          'index'
+    '/<%= lc_tab %>s/new':      'new'
+    '/<%= lc_tab %>s/:id/edit': 'edit'
+    '/<%= lc_tab %>s/:id':      'show'
+    '/<%= lc_tab %>s':          'index'
     
   default: 'index'
-  className: 'stack <%= @ctrl.lc_tab %>s'
+  className: 'stack <%= lc_tab %>s'

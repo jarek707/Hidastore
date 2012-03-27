@@ -39,9 +39,10 @@ class ElContainer
     @container.find(target).hide()
 
   copy_html: ( from, to, addId ) ->
-    from  ?= '#rightPane form ul'
+    from  ?= 'div.active #rightPane form ul'
     to    ?= 'form'
     addId ?= true
+
 
     outter = @container.find(to).html $(from).html()
     if addId

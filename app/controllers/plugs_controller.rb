@@ -52,8 +52,8 @@ class PlugsController < ApplicationController
 
     respond_to do |format|
       if @plug.save
-        @tpl = Tpl.new params, request
-        @tpl.run
+        @tpl = Tpl.new params
+        @tpl.plug_add
         format.html { redirect_to @plug, notice: 'Plug was successfully created.' }
         format.json { render json: @plug, status: :created, location: @plug }
       else

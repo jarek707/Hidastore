@@ -1,3 +1,4 @@
+Fields:
 <% for field in @fields: %>
   <div class="item" data-id="<%= field.id %>">
     <a data-type="show"><%= field.dom %></a>

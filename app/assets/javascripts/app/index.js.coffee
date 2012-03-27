@@ -18,12 +18,20 @@ class App extends Spine.Controller
     super
     
     # Initialize controllers:
-    @append(@items  = new App.Plugs)
+    #@append(@items  = new App.Plugs)
     #@append(@fields = new App.Fields)
     #  ...
     
-    Spine.Route.setup()    
+    Spine.Route.setup()
 
 window.App = App
-
-
+`
+App.CFG = { "Plug" : 
+  { 'fields'   : ['tab_name','flags','legend','parent_id'] , 
+    'children' : {
+      'Field' : {'fields': [], children : [] } 
+    } 
+  } 
+}
+`
+console.debug ['App.CFG:' , App.CFG  ]

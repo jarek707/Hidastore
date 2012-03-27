@@ -1,7 +1,8 @@
-<div id='app_field'></div>
+<div id='appFields'></div>
 <script type="text/javascript" charset="utf-8">
   jQuery(function(){
     // onready, instantiate App
-    new App({el: $("#app_field")})
+    app = new App({el: $("#appFields")})
+    app.append( this.item = new App.Fields )
   });
 </script>

@@ -31,7 +31,7 @@ class Edit extends Spine.Controller
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
-  
+
   constructor: ->
     super
     @active (params) ->
@@ -60,6 +60,7 @@ class Show extends Spine.Controller
   constructor: ->
     super
     @active (params) ->
+      log [ 'fields params ' , params]
       @change(params.id)
 
   change: (id) ->
@@ -67,6 +68,7 @@ class Show extends Spine.Controller
     @render()
 
   render: ->
+    log  [ ' in fields show ' , App.item , @item ]
     @html @view('fields/show')(@item)
 
   edit: ->
@@ -88,8 +90,8 @@ class Index extends Spine.Controller
     Field.fetch()
     
   render: =>
-    #fields = Field.all()
-    #@html @view('fields/index')(fields: fields)
+    fields = Field.all()
+    @html @view('fields/index')(fields: fields)
     
   edit: (e) ->
     item = $(e.target).item()

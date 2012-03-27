@@ -1,7 +1,7 @@
 <div id='rightPane'>
-<a data-type="back">Back</a>
-
-  <div class='head'>Create New Plugin:</div>
+  <div class='head'>Create New Plugin
+    <button class='back' data-type="back">Back</button>
+  </div>
 
   <ul class='show labels'>
     <li class='lab'>Tab Name</li>

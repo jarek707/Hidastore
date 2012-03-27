@@ -1,2 +1,14 @@
-<h1>Template#sp_vi</h1>
-<p>Find me in app/views/template/sp_vi.html.erb</p>
+<div style='width:79%; position:absolute; top:8px; color:blue;'>
+<a data-type="new">New</a>
+</div>
+
+<div id='leftPane'>
+  <div class='head'><%= uc_tab %>:</div>
+    <&#37; for item in @items: &#37;>
+      <div class="item" data-id="<&#37;= item.id &#37;>">
+        <ul class='show'>
+        <li><a data-type="show"><&#37;= item.legend &#37;></a></li>
+      </div>
+    </ul>
+  <&#37; end &#37;>
+</div>
