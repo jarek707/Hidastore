@@ -1,4 +1,3 @@
-<div id='rightPane'>
   <div class='head'>Create New Plugin
     <button class='back' data-type="back">Back</button>
   </div>
@@ -18,4 +17,3 @@
     <li class='actions'><button class='save' style='color:transparent;'>Create</button></li>
   </ul>
 </form>
-</div>

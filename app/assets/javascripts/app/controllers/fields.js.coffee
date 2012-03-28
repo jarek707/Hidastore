@@ -89,11 +89,17 @@ class Index extends Spine.Controller
     Field.bind 'refresh change', @render
     Field.fetch()
     
-  render: =>
-    fields = Field.all()
-    @html @view('fields/index')(fields: fields)
+  render: (fields)  =>
+    @item = { fields : fields }
+    @item.helper = 
+      subSelect: ( domId, val ) ->
+        App.Selects.getText domId,val
+
+    App.Selects.init()
+    @html @view('fields/show')(@item)
     
   edit: (e) ->
+    log [ ' in Field INdex edit ' ]
     item = $(e.target).item()
     @navigate '/fields', item.id, 'edit'
     
@@ -102,6 +108,7 @@ class Index extends Spine.Controller
     item.destroy() if confirm('Sure?')
     
   show: (e) ->
+    log [ ' in fields INdex show ' ]
     item = $(e.target).item()
     @navigate '/fields', item.id
     

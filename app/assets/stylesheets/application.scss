@@ -5,15 +5,24 @@
  *= require_self
  *= require_tree . 
 */
+$fieldBg: #eee;
+$sidebarWidth: 200px;
+
 .stack > *:not(.active) {
   display: none;
 }
 
 body {
   background-color:#e4e4e4 !important;
-  min-width:902px;
   padding: 0;
   margin:0;
+  height:100%;
+  width:100%;
+  min-width:902px;
+
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-box-align:stretch;
 }
 
 #header {
@@ -22,19 +31,75 @@ body {
   margin:0;
 }
 
-#app {
-  margin:16px 0 0 16px;
-  display:-webkit-box;
+
+@mixin boxVH {
+    -webkit-box-flex:1;
+    display:-webkit-box;
+    -webkit-box-align:stretch;
+}
+
+@mixin boxV {
+  @include boxVH;
   -webkit-box-orient:vertical;
 }
 
-div#sep {
-  width:6px;
-  border:1px solid #c5c5c5;
-  background-image: -webkit-gradient(linear, left top, left bottom , from (#f9f9f9), to(#DFE0E1));
+@mixin boxV {
+  @include boxVH;
+  -webkit-box-orient:horizontal;
 }
 
-$fieldBg: #eee;
+#app {
+  @include boxV;
+
+  div.allApp {
+    @include boxV;
+    -webkit-box-pack:start;
+
+    div.sidebar {
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-box-align:stretch;
+      padding: 0;
+      width:$sidebarWidth + 34px;
+
+      div.items {
+        -webkit-box-flex:1;
+        overflow-y:scroll;
+        padding:12px 0 12px 12px;
+      }
+
+      ul.show {
+        width: $sidebarWidth;
+        clear:both;
+        li {
+          font-size:12px;
+        }
+        li:hover a {
+          background: #ccc;
+          color:black;
+        }
+      }
+    }
+
+    div.divUpDown {
+      width:6px;
+      border-width: 0 1px 0 1px;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#dfdaad));
+      border-left:1px solid #ccc;
+    }
+
+    div.stack.plugs {
+      margin: 0 0 0 20px;
+      width:644px;
+    }
+
+    footer {
+      padding:6px;
+      background:#eee;
+    }
+  }
+}
+
 
 @mixin relBlockLeft {
   display:block;
@@ -48,24 +113,6 @@ $fieldBg: #eee;
   -webkit-border-radius:8px;
   padding:0 0px 12px 16px;  
   box-shadow: 8px 8px 16px #bbb;
-}
-
-div#leftPane {
-  @include paneDivs;
-  padding: 0 0 12px 6px;
-  min-width:150px;
-
-  ul.show {
-    width:181px;
-    clear:both;
-    li {
-      font-size:12px;
-    }
-    li:hover a {
-      background: #ccc;
-      color:black;
-    }
-  }
 }
 
 div#rightPane {
@@ -205,7 +252,7 @@ div.head {
 
 div.head.less {
   font-size:15px;
-  width:176px;
+  width:$sidebarWidth - 6px;
   height:21px;
   margin:8px 0;
 }

@@ -13,6 +13,7 @@ $.fn.fieldItem = ->
   Field.find(elementID)
 
 class New extends Spine.Controller
+  className: 'plugs new' 
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
@@ -34,6 +35,7 @@ class New extends Spine.Controller
     @navigate '/plugs/new'
 
 class Edit extends Spine.Controller
+  className: 'plugs edit'
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
@@ -60,6 +62,7 @@ class Edit extends Spine.Controller
     @navigate '/plugs', @item.id
 
 class Show extends Spine.Controller
+  className: 'plugs show'
   events:
     'click [data-type=edit]': 'edit'
     'click [data-type=back]': 'back'
@@ -82,12 +85,11 @@ class Show extends Spine.Controller
   constructor: ->
     super
     O = @
+    log [ 'appending fields ' ]
+    @fields = new App.Fields
     @active (params) ->
-      Field.fetch({plug_id:params.id})
-      setTimeout ( -> O.change(params.id) ), 300 # TODO for now it works
-
-      #@fieldsCtrl = new App({el: $("#appFields")})
-      #@fieldsCtrl.append( this.fields = new App.Fields )
+      if typeof params isnt 'undefined' 
+        @change(params.id)
 
   change: (id) ->
     #try 
@@ -100,13 +102,10 @@ class Show extends Spine.Controller
     #  log [ 'Waiting for data or somthn', e ]
 
   render: ->
-    log [ ' render show' ]
-    @item.helper = 
-      subSelect: ( domId, val ) ->
-        App.Selects.getText domId,val
-
     @html @view('plugs/show') @item
-    App.Selects.init()
+
+    @append $("div class='leftRight'"), @fields
+    @fields.index.render(@item.fields().all())
 
   edit: ->
     @navigate '/plugs', @item.id, 'edit'
@@ -132,58 +131,33 @@ class Show extends Spine.Controller
     item = $(e.target).parent().fieldItem()
     @proxy(item.destroy()) if confirm('sure?')
     
-class Index extends Spine.Controller
-  events:
-    'click [data-type=edit]':    'edit'
-    'click [data-type=destroy]': 'destroy'
-    'click [data-type=show]':    'show'
-    'click button.new':     'new'
+class Start  extends Spine.Controller
+  className: 'plugs start'
 
   constructor: ->
     super
-    try
-      Plug.fetch()
-      Plug.bind 'refresh change', @render
-    catch error
-      log [ "the error:", "#{error}" ]
+    log 'empty start'
+    fields = new App.Fields
+    
+    Field.fetch()
 
-  deactivate: ->
-    # Always keep index on page
+  render: ->
+    log 'empty render start'
 
-  render: =>
-    log [ ' render Index' , Spine.Stack ]
-    @html @view('plugs/index') items: Plug.all()
-
-  edit: (e) ->
-    item = $(e.target).item()
-    @navigate '/plugs', item.id, 'edit'
-    
-  destroy: (e) ->
-    item = $(e.target).item()
-    item.destroy() if confirm('Sure?')
-    
-  show: (e) ->
-    item = $(e.target).item()
-    @navigate '/plugs', item.id
-    
-  new: ->
-    @navigate '/plugs/new'
-    
 class App.Plugs extends Spine.Stack
   controllers:
-    index: Index
     edit:  Edit
     show:  Show
     new:   New
+    start: Start
     
   routes:
     '/plugs/new':      'new'
     '/plugs/:id/edit': 'edit'
     '/plugs/:id':      'show'
-    '/plugs':          'index'
     
-  default: 'index'
-  #className: 'stack plugs'
+  default: 'show'
+  className: 'stack plugs'
 
 #$ ->
 #  app = new App {el: $("#apps")}
