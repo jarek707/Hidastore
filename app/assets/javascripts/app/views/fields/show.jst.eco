@@ -1,36 +1,10 @@
-  <div id='fieldWrap'>
-		<ul class='show labels'>
-			<li class='lab'>Label</li>
-			<li class='lab'>Dom Id</li>
-			<li class='lab'>Elm Type</li>
-			<li class='lab'>Exposure</li>
-		</ul>
-
-		<% if @fields.length: %>
-			<% for fld in @fields: %>
-				<ul class='show item' data-id="<%= fld.id %>">
 					<div class='text'>
-						<li class='val label'><%= fld.label %></li>
-						<li class='val dom'><%= fld.dom %></li>
-						<li class='val elmtype_id' sel_id='<%= fld.elmtype_id %>'><%= @helper.subSelect("elmtype_id",fld.elmtype_id) %></li>
-						<li class='val exposure_id' sel_id='<%= fld.exposure_id %>'><%= @helper.subSelect("exposure_id",fld.exposure_id ) %></li>
+						<li class='val label'><%= @fld.label %></li>
+						<li class='val dom'><%= @fld.dom %></li>
+						<li class='val elmtype_id' sel_id='<%= @fld.elmtype_id %>'><%= @helper.subSelect("elmtype_id",@fld.elmtype_id) %></li>
+						<li class='val exposure_id' sel_id='<%= @fld.exposure_id %>'><%= @helper.subSelect("exposure_id",@fld.exposure_id ) %></li>
 
 						<li class='actions'><button class="alledit"></button></li>
-						<li class='actions'><button data-type='destroy' class="delete"></button></li>
-						<li class='actions'><button data-type='edit' class="edit"></button></li>
+						<li class='actions'><button data-type='destroyField' class="delete"></button></li>
+						<li class='actions'><button data-type='editField' class="edit"></button></li>
 					</div>
-					<div class='input'><form class='field' method='PUT'></form></div>
-				</ul>
-			<% end %>
-		<% end %>
-		
-		<form class='field'>
-				<ul class='show add_field' field_id="new">
-					<li class='val'><input type='text' name='label' value='' required autofocus></li>
-					<li class='val'><input type='text' name='dom' required value=''></li>
-					<li class='val'><select name='elmtype_id' /></li>
-					<li class="val"><select name='exposure_id' /></li>
-					<li class='actions'><button type='submit' class='save' style='color : transparent'>Create</button></li>
-				</ul>
-		</form>
-  </div>

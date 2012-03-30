@@ -1,5 +1,4 @@
 In mysql:
   
 CREATE DATABASE hs
-
-And it should work.
+source db/dump.sql

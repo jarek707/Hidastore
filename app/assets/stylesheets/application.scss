@@ -5,8 +5,13 @@
  *= require_self
  *= require_tree . 
 */
-$fieldBg: #eee;
 $sidebarWidth: 200px;
+$fieldBg: #eee;
+$barStart: #f8f8f8;
+$barDark: #cfcfcf;
+$barStop: #a8a8a8;
+$barBorder: #dedede;
+$colorStop: 75%;
 
 .stack > *:not(.active) {
   display: none;
@@ -60,11 +65,10 @@ body {
       -webkit-box-orient:vertical;
       -webkit-box-align:stretch;
       padding: 0;
-      width:$sidebarWidth + 34px;
+      width:$sidebarWidth + 20px;
 
       div.items {
         -webkit-box-flex:1;
-        overflow-y:scroll;
         padding:12px 0 12px 12px;
       }
 
@@ -82,10 +86,17 @@ body {
     }
 
     div.divUpDown {
-      width:6px;
+      width:12px;
       border-width: 0 1px 0 1px;
-      background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#dfdaad));
-      border-left:1px solid #ccc;
+      background: -webkit-gradient(linear, left center, right center, from($barStart), color-stop($colorStop,$barDark), to($barStop));
+      border-left:1px dotted $barBorder;
+    }
+
+    div.divLeftRight {
+      width:12px;
+      border-width: 0 1px 0 1px;
+      background: -webkit-gradient(linear, left bottom, right top, from($barStart), color-stop($colorStop,$barDark), to($barStop));
+      border-top:1px dotted $barBorder;
     }
 
     div.stack.plugs {
@@ -195,6 +206,7 @@ button {
   opacity:0.7;
   background:url("edit16.png");
   margin-left: 8px;
+  color:transparent;
 }
 
 button:hover{

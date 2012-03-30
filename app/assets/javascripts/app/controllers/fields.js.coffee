@@ -7,42 +7,54 @@ $.fn.item = ->
   Field.find(elementID)
 
 class New extends Spine.Controller
+  className: 'fields new'
+
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
+
+  deactivate: ->
     
   constructor: ->
     super
     @active @render
     
-  render: ->
-    @html @view('fields/new')
+  render: (params) ->
+    @item = 
+      plug_id: params.id
+      helper : { 
+        subSelect: ( domId, val ) ->
+          App.Selects.getText domId,val
+      }
+
+    @html @view('fields/new') @item
+    App.Selects.init()
 
   back: ->
     @navigate '/fields'
 
   submit: (e) ->
     e.preventDefault()
-    field = Field.fromForm(e.target).save()
-#    @navigate '/fields', field.id if field
-    return false
+    Field.fromForm(e.target).save()
+    @navigate '/fields/new'
 
 class Edit extends Spine.Controller
+  className: 'fields edit'
   events:
-    'click [data-type=back]': 'back'
     'submit form': 'submit'
 
   constructor: ->
     super
-    @active (params) ->
-      @change(params.id)
-      
+    @active (id) ->
+      @change(id)
+
   change: (id) ->
     @item = Field.find(id)
     @render()
     
   render: ->
     @html @view('fields/edit')(@item)
+    App.Selects.init()
 
   back: ->
     @navigate '/fields'
@@ -52,81 +64,84 @@ class Edit extends Spine.Controller
     @item.fromForm(e.target).save()
     @navigate '/fields'
 
-class Show extends Spine.Controller
-  events:
-    'click [data-type=edit]': 'edit'
-    'click [data-type=back]': 'back'
+class Index extends Spine.Controller
+  className:'fields index'
 
   constructor: ->
+    Field.fetch()
+    Field.bind 'refresh change', @proxy @active
     super
     @active (params) ->
-      log [ 'fields params ' , params]
-      @change(params.id)
+      @change(params)
 
-  change: (id) ->
-    @item = Field.find(id)
-    @render()
+  change: (params) ->
+    @render(params)
 
-  render: ->
-    log  [ ' in fields show ' , App.item , @item ]
-    @html @view('fields/show')(@item)
+  deactivate: ->
 
-  edit: ->
-    @navigate '/fields', @item.id, 'edit'
+  render: (params) ->
+    return if !(@item = fields: App.plugItem).fields
 
-  back: ->
-    @navigate '/fields'
-
-class Index extends Spine.Controller
-  events:
-    'click [data-type=edit]':    'edit'
-    'click [data-type=destroy]': 'destroy'
-    'click [data-type=show]':    'show'
-    'click [data-type=new]':     'new'
-
-  constructor: ->
-    super
-    Field.bind 'refresh change', @render
-    Field.fetch()
-    
-  render: (fields)  =>
-    @item = { fields : fields }
     @item.helper = 
       subSelect: ( domId, val ) ->
         App.Selects.getText domId,val
 
-    App.Selects.init()
-    @html @view('fields/show')(@item)
-    
-  edit: (e) ->
-    log [ ' in Field INdex edit ' ]
-    item = $(e.target).item()
-    @navigate '/fields', item.id, 'edit'
-    
+    @html @view('fields/index')(@item)
+    (new Show {el: @el.find "[data-id=#{f.id}]"}).active f.id for f in @item.fields
+    @navigate '/fields/new', params.id
+
+class Show extends Spine.Controller
+  className:'fields show'
+  events:
+    'click [data-type=editField]': 'edit'
+    'click [data-type=destroyField]': 'destroy'
+    'submit form.field': 'submit'
+
   destroy: (e) ->
     item = $(e.target).item()
     item.destroy() if confirm('Sure?')
-    
-  show: (e) ->
-    log [ ' in fields INdex show ' ]
-    item = $(e.target).item()
-    @navigate '/fields', item.id
-    
-  new: ->
-    @navigate '/fields/new'
-    
+
+  constructor: ->
+    super
+    @active (params) ->
+      @change(params)
+
+  change: (params) ->
+    @render(params)
+
+  render: (id) ->
+    @item = {fld: Field.find(id)}
+    @id = id
+
+    @item.helper = 
+      subSelect: ( domId, val ) ->
+        App.Selects.getText domId,val
+
+    @html @view('fields/show') @item
+
+  edit: ->
+    (new Edit {el: @el}).active @id
+    #new Edit {el: @el}
+    #@navigate '/fields', @id, 'edit'
+
+  submit: (e) -> 
+    e.preventDefault()
+    Field.fromForm(e.target).save()
+    false
+
 class App.Fields extends Spine.Stack
   controllers:
     index: Index
-    edit:  Edit
     show:  Show
     new:   New
+    edit:  Edit 
+
     
   routes:
-    '/fields/new':      'new'
+    '/fields/new/:id':  'new'
     '/fields/:id/edit': 'edit'
     '/fields/:id':      'show'
-    '/fields':          'index'
+    '/fields/plug/:id': 'index'
     
   default: 'index'
   className: 'stack fields'

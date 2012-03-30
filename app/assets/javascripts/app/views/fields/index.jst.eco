@@ -1,11 +1,14 @@
-Fields:
-<% for field in @fields: %>
-  <div class="item" data-id="<%= field.id %>">
-    <a data-type="show"><%= field.dom %></a>
-    
-    <a data-type="edit">Edit</a> 
-    <a data-type="destroy">Destroy</a>
-  </div>
-<% end %>
+  <div id='fieldWrap'>
+		<ul class='show labels'>
+			<li class='lab'>Label</li>
+			<li class='lab'>Dom Id</li>
+			<li class='lab'>Elm Type</li>
+			<li class='lab'>Exposure</li>
+		</ul>
 
-<p><a data-type="new">New Field</a></p>
+		<% if @fields.length: %>
+			<% for fld in @fields: %>
+				<ul class='show item' id="field<%= fld.id %>" data-id="<%= fld.id %>"></ul>
+			<% end %>
+		<% end %>
+  </div>
