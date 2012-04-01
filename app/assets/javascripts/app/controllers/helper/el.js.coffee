@@ -15,7 +15,6 @@ class Selects
     src = @src
     for el in $(form + " select ")
       do (el) ->
-        log [ 'selects ', $(form) , el]
         $.each(src[el.name], (id,val) -> $(el).append( JQ.tpl.option id,val) )
 
   @getText: ( selId, val ) ->

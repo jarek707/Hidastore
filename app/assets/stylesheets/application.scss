@@ -14,9 +14,10 @@ $barBorder: #dedede;
 $colorStop: 75%;
 
 .stack > *:not(.active) {
-  display: none;
+  display: none !important;
 }
 
+html,
 body {
   background-color:#e4e4e4 !important;
   padding: 0;
@@ -48,7 +49,7 @@ body {
   -webkit-box-orient:vertical;
 }
 
-@mixin boxV {
+@mixin boxH {
   @include boxVH;
   -webkit-box-orient:horizontal;
 }
@@ -57,7 +58,7 @@ body {
   @include boxV;
 
   div.allApp {
-    @include boxV;
+    @include boxH;
     -webkit-box-pack:start;
 
     div.sidebar {
@@ -86,22 +87,40 @@ body {
     }
 
     div.divUpDown {
-      width:12px;
+      width:8px;
       border-width: 0 1px 0 1px;
       background: -webkit-gradient(linear, left center, right center, from($barStart), color-stop($colorStop,$barDark), to($barStop));
       border-left:1px dotted $barBorder;
     }
 
-    div.divLeftRight {
-      width:12px;
+    div.plugs.show, 
+    div.plugs.new, 
+    div.plugs.edit {
+      @include boxV;
+      margin-bottom:20px;
+    }
+
+
+    div.leftRight {
+      height:8px;
       border-width: 0 1px 0 1px;
-      background: -webkit-gradient(linear, left bottom, right top, from($barStart), color-stop($colorStop,$barDark), to($barStop));
+      background: -webkit-gradient(linear, center bottom, center top, from($barStart), color-stop($colorStop,$barDark), to($barStop));
       border-top:1px dotted $barBorder;
+      margin-left:-1px;
+    }
+
+    div.fieldsWrap {
+      @include boxH;
+      -webkit-box-pack:start;
+    }
+
+    div.fields {
+      @include boxV;
     }
 
     div.stack.plugs {
-      margin: 0 0 0 20px;
-      width:644px;
+      margin: 0;
+      @include boxV;
     }
 
     footer {
@@ -136,7 +155,7 @@ div#rightPane {
 ul.show {
   @include relBlockLeft;
   padding-left:6px;
-  width:97%;
+  width:646px;
   margin:2px 0;
   li {
     @include relBlockLeft;
@@ -198,6 +217,11 @@ ul.show {
   }
 }
 
+ul.show.item:hover {
+  background:#eff;
+  cursor:pointer;
+}
+
 button {
   border:none;
   width:16px;
@@ -218,7 +242,7 @@ div.head {
   font-size:28px;
   color:#353;
   width:620px;
-  margin:18px 0 8px 0;
+  margin:20px 0 16px 20px;
   position:relative;
   float:left;
   font-style:italic;
@@ -270,9 +294,8 @@ div.head.less {
 }
 
 div.head.child {
-  margin-left:14px;
+  margin:16px 0 0 32px;
   width:606px;
-  margin-top:4px;
   font-size:22px;
 }
 
@@ -337,3 +360,7 @@ ul.add_field {
     }
   }
 } 
+
+#fieldWrap {
+  max-width:646px;
+}

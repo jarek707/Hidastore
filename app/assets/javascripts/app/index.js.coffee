@@ -25,13 +25,3 @@ class App extends Spine.Controller
     Spine.Route.setup()
 
 window.App = App
-`
-App.CFG = { "Plug" : 
-  { 'fields'   : ['tab_name','flags','legend','parent_id'] , 
-    'children' : {
-      'Field' : {'fields': [], children : [] } 
-    } 
-  } 
-}
-`
-console.debug ['App.CFG:' , App.CFG  ]

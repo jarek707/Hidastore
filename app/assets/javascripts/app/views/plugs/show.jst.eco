@@ -1,8 +1,4 @@
   <div class='head'><%= @legend %>
   	<button class='edit' data-type='edit'></button>
   </div>
-  
-  <div class='head child'>Fields
-  	<button class='showHide opened' data-type='showHide' target='.stack.fields'></button>
-  </div>
 

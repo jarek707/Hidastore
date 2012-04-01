@@ -93,6 +93,7 @@ class Tpl
   end
 
   def plug_add
+    return false
     Disk::Paths.each_key do |action|
       fileName = Disk.set_file_name @tab, action, '_create_'
       content  = View.set_content action

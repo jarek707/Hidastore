@@ -11,15 +11,19 @@ class New extends Spine.Controller
 
   events:
     'click [data-type=back]': 'back'
-    'submit form': 'submit'
+    'submit form.new': 'submit'
 
   deactivate: ->
     
   constructor: ->
     super
     @active @render
+
+  active: ( params ) ->
+    super
     
   render: (params) ->
+    @plug_id = params.id
     @item = 
       plug_id: params.id
       helper : { 
@@ -31,28 +35,29 @@ class New extends Spine.Controller
     App.Selects.init()
 
   back: ->
-    @navigate '/fields'
+    @navigate '/fields', @plug_id
 
   submit: (e) ->
     e.preventDefault()
     Field.fromForm(e.target).save()
-    @navigate '/fields/new'
+    #@navigate '/plugs', @plug_id
 
 class Edit extends Spine.Controller
   className: 'fields edit'
   events:
-    'submit form': 'submit'
+    'submit form.field': 'submit'
 
   constructor: ->
     super
-    @active (id) ->
-      @change(id)
+    @active (params) ->
+      @change(@plug_id = params.id)
 
   change: (id) ->
     @item = Field.find(id)
     @render()
     
   render: ->
+    log [ ' in edit render fields ' , @item , @el ]
     @html @view('fields/edit')(@item)
     App.Selects.init()
 
@@ -62,33 +67,7 @@ class Edit extends Spine.Controller
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    @navigate '/fields'
-
-class Index extends Spine.Controller
-  className:'fields index'
-
-  constructor: ->
-    Field.fetch()
-    Field.bind 'refresh change', @proxy @active
-    super
-    @active (params) ->
-      @change(params)
-
-  change: (params) ->
-    @render(params)
-
-  deactivate: ->
-
-  render: (params) ->
-    return if !(@item = fields: App.plugItem).fields
-
-    @item.helper = 
-      subSelect: ( domId, val ) ->
-        App.Selects.getText domId,val
-
-    @html @view('fields/index')(@item)
-    (new Show {el: @el.find "[data-id=#{f.id}]"}).active f.id for f in @item.fields
-    @navigate '/fields/new', params.id
+    #@navigate '/plugs', @plug_id
 
 class Show extends Spine.Controller
   className:'fields show'
@@ -120,7 +99,7 @@ class Show extends Spine.Controller
     @html @view('fields/show') @item
 
   edit: ->
-    (new Edit {el: @el}).active @id
+    #(new Edit {el: @el}).active @id
     #new Edit {el: @el}
     #@navigate '/fields', @id, 'edit'
 
@@ -129,14 +108,57 @@ class Show extends Spine.Controller
     Field.fromForm(e.target).save()
     false
 
+class Index extends Spine.Controller
+  className:'fields index'
+
+  events:
+    'click .show.item': 'edit'
+    'click [data-type=showHide]': 'showHide'
+
+  showHide:(e) ->
+    targetDiv = $($(e.target).attr('target'))
+    if $(targetDiv).is ":hidden"
+      $(targetDiv).slideDown 'fast'
+      $(e.target).fadeOut 'fast', -> $(this).addClass('opened').fadeIn 'slow'
+    else
+      $(targetDiv).fadeOut 'fast'
+      $(e.target).fadeOut 'fast', -> $(this).removeClass('opened').fadeIn 'slow'
+
+  constructor: ->
+    super
+    @active (params) ->
+      @change(params)
+
+  change: (params) ->
+    @render(params)
+
+  deactivate: ->
+
+  render: (params) ->
+    return if !(@item = fields: App.plugItem).fields
+
+    @item.helper = 
+      subSelect: ( domId, val ) ->
+        App.Selects.getText domId,val
+
+    log [  @el , $(@el ), $('.fields.index') ]
+    $('.fields.index').html( @view('fields/index')(@item) )
+    @navigate '/fields/new', params.id
+    
+  edit: (e) ->
+    log $(e.target).parents('[data-id]').data('id')
+    @navigate '/fields', $(e.target).parents('[data-id]').data('id'), 'edit'
+
+
 class App.Fields extends Spine.Stack
+  constructor: ->
+    super
   controllers:
     index: Index
     show:  Show
     new:   New
-    edit:  Edit 
+    edit:  Edit
 
-    
   routes:
     '/fields/new/:id':  'new'
     '/fields/:id/edit': 'edit'
@@ -145,3 +167,5 @@ class App.Fields extends Spine.Stack
     
   default: 'index'
   className: 'stack fields'
+
+Fields = App.Fields

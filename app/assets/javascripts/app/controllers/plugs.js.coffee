@@ -1,5 +1,6 @@
 $ = jQuery.sub()
 Plug  = App.Plug
+Field = App.Field
 
 $.fn.item = ->
   elementID   = $(@).data('id')
@@ -15,17 +16,21 @@ class New extends Spine.Controller
   constructor: ->
     super
     @active @render
+    #Plug.bind 'refresh change', @proxy @reload
     
   render: ->
     @html @view('plugs/new')
 
   back: ->
-    @navigate '/plugs'
+    log [ ' last ' , Plug.last().id ]
+    @navigate '/plugs', Plug.last().id
+    #@deactivate()
 
   submit: (e) ->
     e.preventDefault()
     plug = Plug.fromForm(e.target).save()
-    @navigate '/plugs/new'
+    log [ plug.id , ' afer save  ' ]
+    @navigate '/plugs', plug.id , 'edit'
 
 class Edit extends Spine.Controller
   className: 'plugs edit'
@@ -57,23 +62,16 @@ class Show extends Spine.Controller
   className: 'plugs show'
   events:
     'click [data-type=edit]': 'edit'
-    'click [data-type=showHide]': 'showHide'
-
-  showHide:(e) ->
-    targetDiv = $($(e.target).attr('target'))
-    if $(targetDiv).is ":hidden"
-      $(targetDiv).slideDown 'fast'
-      $(e.target).fadeOut 'fast', -> $(this).addClass('opened').fadeIn 'slow'
-    else
-      $(targetDiv).fadeOut 'fast'
-      $(e.target).fadeOut 'fast', -> $(this).removeClass('opened').fadeIn 'slow'
     
   constructor: ->
     super
-    @fields = new App.Fields
-    Plug.bind  'refresh change', @proxy @render
+    Field.fetch()
+    Field.bind  'refresh change', @proxy @fieldChange
     @active (params) ->
         @change(params.id) if params
+
+  fieldChange: (params) ->
+    @change( params.plug_id ) if params.plug_id
 
   change: (id) ->
     @item = Plug.find(id)
@@ -84,7 +82,6 @@ class Show extends Spine.Controller
     if @item
       @html @view('plugs/show') @item
 
-      @append $("div class='leftRight'"), @fields
       @navigate '/fields/plug', @item.id
 
   edit: ->
@@ -96,10 +93,12 @@ class Show extends Spine.Controller
     @navigate '/plugs'
 
 class App.Plugs extends Spine.Stack
+  constructor: ->
+    super
   controllers:
     edit:  Edit
-    show:  Show
     new:   New
+    show:  Show
     
   routes:
     '/plugs/new':      'new'

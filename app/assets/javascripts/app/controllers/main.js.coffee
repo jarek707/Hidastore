@@ -5,7 +5,7 @@ $.fn.item = ->
   elementID or= $(@).parents('[data-id]').data('id')
   Plug.find(elementID)
 
-class PlugsIndex extends Spine.Controller
+class App.PlugsIndex extends Spine.Controller
   className: 'sidebar'
   events:
     'click [data-type=destroy]': 'destroy'
@@ -13,7 +13,6 @@ class PlugsIndex extends Spine.Controller
     'click button.new':          'new'
 
   constructor: ->
-    log [ 'main constructor' ]
     super
     try
       #Plug.bind 'refresh change', @render
@@ -25,16 +24,14 @@ class PlugsIndex extends Spine.Controller
     # Always keep index on page
 
   render: =>
-    log [ 'main render' ]
+    log [ ' plugs render  from ' ]
     @html @view('plugs/index') items: Plug.all()
 
   show: (e) ->
     item = $(e.target).item()
-    log [ 'main show', item.id ]
     @navigate '/plugs', item.id
 
   edit: (e) ->
-    log [ 'main edit' ]
     item = $(e.target).item()
     @navigate '/plugs', item.id, 'edit'
     
@@ -43,6 +40,7 @@ class PlugsIndex extends Spine.Controller
     item.destroy() if confirm('Sure?')
     
   new: ->
+    log [ 'nav to new plug ']
     @navigate '/plugs/new'
 
 class App.AllApp extends Spine.Controller
@@ -50,21 +48,23 @@ class App.AllApp extends Spine.Controller
 
   constructor: ->
     super
-    plugsIndex = new PlugsIndex
-    plugs      = new App.Plugs
+    plugsIndex = new App.PlugsIndex
 
     Plug.fetch()
     Plug.bind 'refresh change', plugsIndex.render
 
-    @routes
-      '/plugs': (params) ->
-        log [ 'in index call ' , params]
-        plugs.index.active(params)
-      '/plugs/new': (params) ->
-        log [ 'in new index call ' , params]
-        plugs.new.active(params)
-      '/plugs/:id': (params) ->
-        log [ 'in call ' , params]
-        plugs.show.active(params)
+    fields = null
+    plugs  = null
 
-    @append plugsIndex, $("<div class='divUpDown'>"), plugs
+    @append plugsIndex, $("<div class='divUpDown'/><div class='main'><div class='plugs'/><div class='leftRight' /><div class='fields' /></div>")
+
+    setTimeout ( -> 
+      plugs  = new App.Plugs  { el: $ '.plugs'  } 
+      fields = new App.Fields { el: $ '.fields' } ) , 100
+
+  controllers:
+    index: App.PlugsIndex
+    
+  routes:
+    '/plugs':      'index'
+    '/plugsroot': 'index'
