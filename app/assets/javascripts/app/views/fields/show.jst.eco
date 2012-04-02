@@ -1,3 +1,4 @@
+<!--
 					<div class='text'>
 						<li class='val label'><%= @fld.label %></li>
 						<li class='val dom'><%= @fld.dom %></li>
@@ -8,3 +9,4 @@
 						<li class='actions'><button data-type='destroyField' class="delete"></button></li>
 						<li class='actions'><button data-type='editField' class="edit"></button></li>
 					</div>
+-->

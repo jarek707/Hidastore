@@ -1,3 +1,4 @@
+<!--
 		<form class='field'>
         <input type="hidden" name="plug_id" value='<%= @plug_id %>'></input>
 				<ul class='show add_field' field_id="new">
@@ -8,3 +9,4 @@
 					<li class='actions'><button type='submit' class='save'>Create</button></li>
 				</ul>
 		</form>
+-->

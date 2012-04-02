@@ -137,13 +137,14 @@ class Index extends Spine.Controller
   render: (params) ->
     return if !(@item = fields: App.plugItem).fields
 
-    @item.helper = 
+    @item.helper =
       subSelect: ( domId, val ) ->
         App.Selects.getText domId,val
 
-    log [  @el , $(@el ), $('.fields.index') ]
-    $('.fields.index').html( @view('fields/index')(@item) )
-    @navigate '/fields/new', params.id
+    @html @view('fields/index')(@item)
+
+    #@navigate '/fields/new', params.id
+    #@navigate '/plugs', params.id
     
   edit: (e) ->
     log $(e.target).parents('[data-id]').data('id')
@@ -151,8 +152,6 @@ class Index extends Spine.Controller
 
 
 class App.Fields extends Spine.Stack
-  constructor: ->
-    super
   controllers:
     index: Index
     show:  Show
@@ -163,7 +162,7 @@ class App.Fields extends Spine.Stack
     '/fields/new/:id':  'new'
     '/fields/:id/edit': 'edit'
     '/fields/:id':      'show'
-    '/fields/plug/:id': 'index'
+    '/plugs/:id/fields': 'index'
     
   default: 'index'
   className: 'stack fields'

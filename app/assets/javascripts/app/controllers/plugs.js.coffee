@@ -19,6 +19,7 @@ class New extends Spine.Controller
     #Plug.bind 'refresh change', @proxy @reload
     
   render: ->
+    log [ ' in new plug ' ]
     @html @view('plugs/new')
 
   back: ->
@@ -48,6 +49,7 @@ class Edit extends Spine.Controller
     @render()
     
   render: ->
+    #log [ Spine.Route('plugs/39/new') ]
     @html @view('plugs/edit')(@item)
 
   back: ->
@@ -81,8 +83,7 @@ class Show extends Spine.Controller
   render: ->
     if @item
       @html @view('plugs/show') @item
-
-      @navigate '/fields/plug', @item.id
+      @navigate '/plugs', @item.id, 'fields'
 
   edit: ->
     @navigate '/plugs', @item.id, 'edit'
@@ -94,6 +95,7 @@ class Show extends Spine.Controller
 
 class App.Plugs extends Spine.Stack
   constructor: ->
+    App.plugsControllerInstance = @
     super
   controllers:
     edit:  Edit

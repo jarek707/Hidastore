@@ -12,59 +12,37 @@ class App.PlugsIndex extends Spine.Controller
     'click [data-type=show]':    'show'
     'click button.new':          'new'
 
-  constructor: ->
-    super
-    try
-      #Plug.bind 'refresh change', @render
-      #Plug.fetch()
-    catch error
-      log [ "the error:", "#{error}" ]
-
-  deactivate: ->
-    # Always keep index on page
-
   render: =>
-    log [ ' plugs render  from ' ]
+    log [ Spine.Route.path, Spine.Route.path.match(/(^\/)/) ]
     @html @view('plugs/index') items: Plug.all()
 
   show: (e) ->
-    item = $(e.target).item()
-    @navigate '/plugs', item.id
+    @navigate '/plugs', $(e.target).item().id
+
+  new: ->
+    log [ 'nav to new plug ']
+    @navigate '/plugs/new'
 
   edit: (e) ->
-    item = $(e.target).item()
-    @navigate '/plugs', item.id, 'edit'
+    @navigate '/plugs', $(e.target).item().id, 'edit'
     
   destroy: (e) ->
     item = $(e.target).item()
     item.destroy() if confirm('Sure?')
     
-  new: ->
-    log [ 'nav to new plug ']
-    @navigate '/plugs/new'
-
 class App.AllApp extends Spine.Controller
   className: "allApp"
 
   constructor: ->
     super
-    plugsIndex = new App.PlugsIndex
+    @html @view('layout')
 
     Plug.fetch()
-    Plug.bind 'refresh change', plugsIndex.render
 
-    fields = null
-    plugs  = null
-
-    @append plugsIndex, $("<div class='divUpDown'/><div class='main'><div class='plugs'/><div class='leftRight' /><div class='fields' /></div>")
-
-    setTimeout ( -> 
-      plugs  = new App.Plugs  { el: $ '.plugs'  } 
-      fields = new App.Fields { el: $ '.fields' } ) , 100
-
-  controllers:
-    index: App.PlugsIndex
-    
-  routes:
-    '/plugs':      'index'
-    '/plugsroot': 'index'
+    $('.app .allApp .main .fields').ready( ->
+      Plug.bind 'refresh change',
+             ( new App.PlugsIndex { el: $ '.sidebar' } ).render
+      plugs  = new App.Plugs      { el: $ '.plugs'   }
+      fields = new App.Fields     { el: $ '.fields'  }
+      #Spine.Route.path =''
+    )
