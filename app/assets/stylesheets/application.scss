@@ -37,6 +37,19 @@ body {
   height:46px;
   background-image:-webkit-gradient(linear, center top, center bottom, from($headerLight), to($headerDark));
   margin:0;
+  color:#ddd;
+  font-style:italic;
+  .title {
+    margin:12px 0 0 20px;
+    font-size:24px;
+    position:relative;
+    float:left;
+  }
+  .personal {
+    position:relative;
+    float:right;
+    margin-right:8px;
+  }
 }
 
 footer {
@@ -45,6 +58,12 @@ footer {
   color:#ccc;
 }
 
+
+.main {
+  width:100%;
+  position:relative;
+  float:left;
+}
 
 @mixin boxVH {
     -webkit-box-flex:1;
@@ -110,17 +129,13 @@ footer {
     }
 
 
-    div.leftRightWrap {
-      width:100%;
-      margin:0;
-    }
-
     div.leftRight {
       height:8px;
       border-width: 0 1px 0 1px;
       background: -webkit-gradient(linear, center bottom, center top, from($barStop), color-stop(100-$colorStop,$barDark), to($barStart));
       border-top:1px dotted $barBorder;
       margin-left:-1px;
+      display:none;
     }
 
     div#fieldWrap {
@@ -245,7 +260,7 @@ button {
 
 button:hover {
   opacity:1;
-  border:1px dotted #eee;
+  border:1px solid #ccc;
   width:18px;
   height:18px;
 }
@@ -261,13 +276,13 @@ div.head {
   font-weight:bold;
   background-image:-webkit-gradient(linear, left center, right center, from(#eee), to(#d3d3d3));
   -webkit-border-radius:5px;
-  padding:3px 0px 2px 5px;
+  padding:8px 0px 0px 5px;
 
   button {
     color:transparent;
     background:url("goback32.png");
     cursor:pointer;
-    margin:1px 4px 1px 0px;
+    margin:-6px 4px 2px 0px;
     width:32px;
     height:32px;
     float:right;
@@ -291,7 +306,7 @@ div.head {
     background:url("arrow_down24.png");
     height:24px;
     width:24px;
-    margin:2px 7px 3px;
+    margin:0px 7px 5px;
   }
   button.showHide.opened {
     background:url("arrow_up24.png");
@@ -300,9 +315,10 @@ div.head {
 
 div.head.less {
   font-size:15px;
-  width:$sidebarWidth - 6px;
+  width:$sidebarWidth - 5px;
   height:21px;
   margin:8px 0;
+  padding:1px 2px 1px 4px;
 }
 
 div.head.child {
@@ -315,9 +331,8 @@ ul.show.text li.val {
     background: $fieldBg;
 }
 ul.show.labels {
-  margin-left:0px;
+  margin: 10px 0 5px 20px;
   clear:both;
-  margin-bottom:1px solid #888;
   height:22px;
   li.lab {
     width:120px;

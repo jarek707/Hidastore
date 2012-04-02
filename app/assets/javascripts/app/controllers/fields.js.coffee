@@ -135,6 +135,7 @@ class Index extends Spine.Controller
   deactivate: ->
 
   render: (params) ->
+    log [ params , ' in fields render ' , App.plugItem ]
     return if !(@item = fields: App.plugItem).fields
 
     @item.helper =

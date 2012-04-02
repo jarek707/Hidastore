@@ -16,7 +16,6 @@ class New extends Spine.Controller
   constructor: ->
     super
     @active @render
-    #Plug.bind 'refresh change', @proxy @reload
     
   render: ->
     log [ ' in new plug ' ]
@@ -25,13 +24,12 @@ class New extends Spine.Controller
   back: ->
     log [ ' last ' , Plug.last().id ]
     @navigate '/plugs', Plug.last().id
-    #@deactivate()
 
   submit: (e) ->
     e.preventDefault()
     plug = Plug.fromForm(e.target).save()
     log [ plug.id , ' afer save  ' ]
-    @navigate '/plugs', plug.id , 'edit'
+    @navigate '/plugs', plug.id
 
 class Edit extends Spine.Controller
   className: 'plugs edit'
@@ -77,11 +75,13 @@ class Show extends Spine.Controller
 
   change: (id) ->
     @item = Plug.find(id)
+    log [ 'field change' , @item.fields().all() ]
     App.plugItem = @item.fields().all()
     @render()
 
   render: ->
     if @item
+      $('#app .main .leftRight').show()
       @html @view('plugs/show') @item
       @navigate '/plugs', @item.id, 'fields'
 

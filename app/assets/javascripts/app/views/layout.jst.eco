@@ -2,7 +2,6 @@
 <div class='divUpDown'/>
 <div class='main'>
 	<div class='plugs'/>
-	<div class='leftRightWrap'>
 	<div class='leftRight'></div>
 	<div class='fields' />
 </div>

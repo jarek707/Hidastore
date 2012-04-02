@@ -13,8 +13,10 @@ class App.PlugsIndex extends Spine.Controller
     'click button.new':          'new'
 
   render: =>
-    log [ Spine.Route.path, Spine.Route.path.match(/(^\/)/) ]
     @html @view('plugs/index') items: Plug.all()
+    # HACK - need to jump start plug controller, works for now
+    if (match = Spine.Route.path.match(/\/plugs\/(\d*)/))
+      @navigate '/plugs', match.pop()
 
   show: (e) ->
     @navigate '/plugs', $(e.target).item().id
@@ -39,10 +41,9 @@ class App.AllApp extends Spine.Controller
 
     Plug.fetch()
 
-    $('.app .allApp .main .fields').ready( ->
+    $('.app .allApp .fields').ready( ->
       Plug.bind 'refresh change',
              ( new App.PlugsIndex { el: $ '.sidebar' } ).render
       plugs  = new App.Plugs      { el: $ '.plugs'   }
       fields = new App.Fields     { el: $ '.fields'  }
-      #Spine.Route.path =''
     )
