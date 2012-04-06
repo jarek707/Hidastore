@@ -95,7 +95,7 @@
     };
 
     Collection.prototype.associated = function(record) {
-      return record[this.fkey] === this.record.id;
+      return parseInt(record[this.fkey]) === parseInt(this.record.id);
     };
 
     return Collection;

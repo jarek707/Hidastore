@@ -20,4 +20,16 @@ class JQ
           cb(data)
       )
 
+  @show_hide: (e) ->
+    targetDiv = $($(e.target).attr('target'))
+    if $(e.target).hasClass('opened')
+      $(targetDiv).fadeOut 'fast'
+      $(e.target).fadeOut 'fast', -> $(this).removeClass('opened').fadeIn 'slow'
+    else
+      $(targetDiv).slideDown 'fast'
+      $(e.target).fadeOut 'fast', -> $(this).addClass('opened').fadeIn 'slow'
+
+  @set_new: (e) ->
+    e.find('.addField').addClass 'goBack'
+
 window.JQ = JQ

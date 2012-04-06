@@ -7,45 +7,48 @@ $.fn.item = ->
   Field.find(elementID)
 
 class New extends Spine.Controller
-  className: 'fields new'
+  className: 'new'
 
   events:
     'click [data-type=back]': 'back'
     'submit form.new': 'submit'
+    'click [data-type=showHide]': 'show_hide'
+    'click [data-type=new]':      'to_index'
 
-  deactivate: ->
-    
   constructor: ->
     super
     @active @render
 
-  active: ( params ) ->
-    super
-    
   render: (params) ->
-    @plug_id = params.id
     @item = 
-      plug_id: params.id
-      helper : { 
-        subSelect: ( domId, val ) ->
-          App.Selects.getText domId,val
-      }
+      plug_id: Index.plug_id
 
-    @html @view('fields/new') @item
+    @html @view('fields/head')
+    JQ.set_new( @el )
+    @append @view('fields/new') @item
     App.Selects.init()
 
   back: ->
-    @navigate '/fields', @plug_id
+    @navigate '/fields', Index.plug_id
 
   submit: (e) ->
     e.preventDefault()
     Field.fromForm(e.target).save()
-    #@navigate '/plugs', @plug_id
+    Field.fetch()
+    @navigate '/fields', Index.plug_id
+
+  show_hide: (e) ->
+      JQ.show_hide(e)
+
+  to_index: ->
+    @navigate '/fields', Index.plug_id
 
 class Edit extends Spine.Controller
-  className: 'fields edit'
+  className: 'edit'
   events:
     'submit form.field': 'submit'
+    'click [data-type=showHide]': 'show_hide'
+    'click [data-type=new]':      'to_index'
 
   constructor: ->
     super
@@ -57,8 +60,10 @@ class Edit extends Spine.Controller
     @render()
     
   render: ->
-    log [ ' in edit render fields ' , @item , @el ]
-    @html @view('fields/edit')(@item)
+    @html   @view('fields/head')
+    @append @view('fields/edit')(@item)
+    log [ @el, @el.find('.addField') ]
+    JQ.set_new(@el)
     App.Selects.init()
 
   back: ->
@@ -67,105 +72,80 @@ class Edit extends Spine.Controller
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    #@navigate '/plugs', @plug_id
+    @navigate '/fields', Index.plug_id
 
-class Show extends Spine.Controller
-  className:'fields show'
-  events:
-    'click [data-type=editField]': 'edit'
-    'click [data-type=destroyField]': 'destroy'
-    'submit form.field': 'submit'
+  show_hide: (e) ->
+      JQ.show_hide(e)
 
-  destroy: (e) ->
-    item = $(e.target).item()
-    item.destroy() if confirm('Sure?')
-
-  constructor: ->
-    super
-    @active (params) ->
-      @change(params)
-
-  change: (params) ->
-    @render(params)
-
-  render: (id) ->
-    @item = {fld: Field.find(id)}
-    @id = id
-
-    @item.helper = 
-      subSelect: ( domId, val ) ->
-        App.Selects.getText domId,val
-
-    @html @view('fields/show') @item
-
-  edit: ->
-    #(new Edit {el: @el}).active @id
-    #new Edit {el: @el}
-    #@navigate '/fields', @id, 'edit'
-
-  submit: (e) -> 
-    e.preventDefault()
-    Field.fromForm(e.target).save()
-    false
+  to_index: ->
+    @navigate '/fields', Index.plug_id
 
 class Index extends Spine.Controller
-  className:'fields index'
+  plug_id: -1
+  className:'index'
 
   events:
-    'click .show.item': 'edit'
-    'click [data-type=showHide]': 'showHide'
-
-  showHide:(e) ->
-    targetDiv = $($(e.target).attr('target'))
-    if $(targetDiv).is ":hidden"
-      $(targetDiv).slideDown 'fast'
-      $(e.target).fadeOut 'fast', -> $(this).addClass('opened').fadeIn 'slow'
-    else
-      $(targetDiv).fadeOut 'fast'
-      $(e.target).fadeOut 'fast', -> $(this).removeClass('opened').fadeIn 'slow'
+    'click [data-type=new]':      'new'
+    'click [data-type=showHide]': 'show_hide'
+    'click [data-type=destroy]' : 'destroy'
+    'click [data-type=edit]'    : 'edit'
 
   constructor: ->
     super
+    #Field.bind 'refresh change', @proxy @render
+    #Field.bind 'change refresh', @proxy @active
     @active (params) ->
-      @change(params)
+      Index.plug_id = params.plug_id or params.id
+      log  [ 'active', params, Index.plug_id ]
+      @render() if Index.plug_id > -1
 
-  change: (params) ->
-    @render(params)
+  render: ->
+    @item = 
+      fields : Plug.find(Index.plug_id).fields().all()
+      plug_id: Index.plug_id
+      helper : { 
+        subSelect: ( domId, val ) ->
+          App.Selects.getText domId,val
+      }
 
-  deactivate: ->
+    log [ 'rendering items' ]
 
-  render: (params) ->
-    log [ params , ' in fields render ' , App.plugItem ]
-    return if !(@item = fields: App.plugItem).fields
+    @html @view('fields/head')
+    @append @view('fields/index')(@item)
 
-    @item.helper =
-      subSelect: ( domId, val ) ->
-        App.Selects.getText domId,val
+  show_hide: (e) ->
+    JQ.show_hide(e)
 
-    @html @view('fields/index')(@item)
+  new: (e) ->
+    @navigate '/fields', Index.plug_id, 'new'
 
-    #@navigate '/fields/new', params.id
-    #@navigate '/plugs', params.id
-    
   edit: (e) ->
-    log $(e.target).parents('[data-id]').data('id')
-    @navigate '/fields', $(e.target).parents('[data-id]').data('id'), 'edit'
+    item = $(e.target).item()
+    @navigate '/fields', item.plug_id, 'edit', item.id
 
+  destroy: (e) ->
+    e.preventDefault()
+    item = $(e.target).item()
+    if confirm('sure?')
+      item.destroy()
+      @navigate '/plugs', Index.plug_id
+
+class Init extends Spine.Controller
 
 class App.Fields extends Spine.Stack
   controllers:
-    index: Index
-    show:  Show
-    new:   New
-    edit:  Edit
+    index:   Index
+    new:     New
+    edit:    Edit
+    init:    Init
 
   routes:
-    '/fields/new/:id':  'new'
-    '/fields/:id/edit': 'edit'
-    '/fields/:id':      'show'
-    '/plugs/:id/fields': 'index'
+    '/fields/init'         : 'init'
+    '/fields/:id'          : 'index'
+    '/fields/:id/new'      : 'new'
+    '/fields/:id/edit/:id' : 'edit'
     
-  default: 'index'
+  default: 'init'
   className: 'stack fields'
 
 Fields = App.Fields

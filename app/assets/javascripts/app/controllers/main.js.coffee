@@ -12,17 +12,21 @@ class App.PlugsIndex extends Spine.Controller
     'click [data-type=show]':    'show'
     'click button.new':          'new'
 
-  render: =>
+  constructor: ->
+    super
+
+  render: (params) =>
     @html @view('plugs/index') items: Plug.all()
+
+  renderPlug: ->
     # HACK - need to jump start plug controller, works for now
     if (match = Spine.Route.path.match(/\/plugs\/(\d*)/))
       @navigate '/plugs', match.pop()
-
+    
   show: (e) ->
     @navigate '/plugs', $(e.target).item().id
 
   new: ->
-    log [ 'nav to new plug ']
     @navigate '/plugs/new'
 
   edit: (e) ->
@@ -30,7 +34,9 @@ class App.PlugsIndex extends Spine.Controller
     
   destroy: (e) ->
     item = $(e.target).item()
-    item.destroy() if confirm('Sure?')
+    if confirm('Sure?')
+      item.destroy() 
+      @navigate '/plugs/init'
     
 class App.AllApp extends Spine.Controller
   className: "allApp"
@@ -46,4 +52,5 @@ class App.AllApp extends Spine.Controller
              ( new App.PlugsIndex { el: $ '.sidebar' } ).render
       plugs  = new App.Plugs      { el: $ '.plugs'   }
       fields = new App.Fields     { el: $ '.fields'  }
+      fields.plugs = plugs
     )

@@ -1,6 +1,5 @@
-  <div class='input'>
-		<form class='field' method='PUT'>
-        <input type="hidden" name="plug_id" value='<%= @plug_id %>'></input>
+		<form class='field hidable' method='PUT'>
+        <input type="hidden" name="plug_id" value=<%= @plug_id %>></input>
 				<ul class='show add_field' field_id="new">
 					<li class='val'><input type='text' name='label' value='<%= @label %>' required autofocus></li>
 					<li class='val'><input type='text' name='dom' required value='<%= @dom %>'></li>
@@ -9,4 +8,3 @@
 					<li class='actions'><button type='submit' class='save'>Create</button></li>
 				</ul>
 		</form>
-  </div>

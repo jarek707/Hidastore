@@ -311,6 +311,17 @@ div.head {
   button.showHide.opened {
     background:url("arrow_up24.png");
   }
+  
+  button.addField {
+    background:url("add16.png");
+    width:16px;
+    height:16px;
+    margin:5px 7px 5px;
+  }
+
+  button.addField.goBack {
+    background:url("goback16.png");
+  }
 }
 
 div.head.less {
