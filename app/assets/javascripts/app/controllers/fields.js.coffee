@@ -24,7 +24,7 @@ class New extends Spine.Controller
       plug_id: Index.plug_id
 
     @html @view('fields/head')
-    JQ.set_new( @el )
+    JQ.set_edit @el
     @append @view('fields/new') @item
     App.Selects.init()
 
@@ -53,7 +53,7 @@ class Edit extends Spine.Controller
   constructor: ->
     super
     @active (params) ->
-      @change(@plug_id = params.id)
+      @change params.id
 
   change: (id) ->
     @item = Field.find(id)
@@ -62,8 +62,7 @@ class Edit extends Spine.Controller
   render: ->
     @html   @view('fields/head')
     @append @view('fields/edit')(@item)
-    log [ @el, @el.find('.addField') ]
-    JQ.set_new(@el)
+    JQ.set_edit @el
     App.Selects.init()
 
   back: ->
@@ -92,11 +91,8 @@ class Index extends Spine.Controller
 
   constructor: ->
     super
-    #Field.bind 'refresh change', @proxy @render
-    #Field.bind 'change refresh', @proxy @active
     @active (params) ->
       Index.plug_id = params.plug_id or params.id
-      log  [ 'active', params, Index.plug_id ]
       @render() if Index.plug_id > -1
 
   render: ->
@@ -107,8 +103,6 @@ class Index extends Spine.Controller
         subSelect: ( domId, val ) ->
           App.Selects.getText domId,val
       }
-
-    log [ 'rendering items' ]
 
     @html @view('fields/head')
     @append @view('fields/index')(@item)
@@ -131,6 +125,9 @@ class Index extends Spine.Controller
       @navigate '/plugs', Index.plug_id
 
 class Init extends Spine.Controller
+  controller: ->
+    super
+    JQ.show_divider false
 
 class App.Fields extends Spine.Stack
   controllers:

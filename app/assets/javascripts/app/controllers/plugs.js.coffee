@@ -26,7 +26,6 @@ class New extends Spine.Controller
   submit: (e) ->
     e.preventDefault()
     plug = Plug.fromForm(e.target).save()
-    log [ plug.id , ' in new ', Plug.last().id ]
     @navigate '/plugs',  Plug.last().id
 
 class Edit extends Spine.Controller
@@ -34,6 +33,7 @@ class Edit extends Spine.Controller
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
+    'click [data-type=showHide]': 'show_hide'
   
   constructor: ->
     super
@@ -55,10 +55,14 @@ class Edit extends Spine.Controller
     @item.fromForm(e.target).save()
     @navigate '/plugs', @item.id
 
+  show_hide: (e) ->
+      JQ.show_hide(e)
+
 class Show extends Spine.Controller
   className: 'plugs show'
   events:
     'click [data-type=edit]': 'edit'
+    'click [data-type=showHide]': 'show_hide'
     
   constructor: ->
     super
@@ -72,12 +76,15 @@ class Show extends Spine.Controller
 
   render: ->
     if @item
-      $('#app .main .leftRight').show()
+      JQ.show_divider()
       @html @view('plugs/show') @item
       @navigate '/fields', @item.id
 
   edit: ->
     @navigate '/plugs', @item.id, 'edit'
+
+  show_hide: (e) ->
+      JQ.show_hide(e)
 
 class Init extends Spine.Controller
   constructor: ->

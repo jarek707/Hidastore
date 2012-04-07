@@ -1,6 +1,16 @@
+<div class='search'>
+	<p>Find:</p>
+	<input type='text' />
+</div>
 <div class='sidebar' />
 <div class='divUpDown'/>
 <div class='main'>
+	<div class='menu'>
+		<ul>
+			<li><a>Universe</a></li>
+			<li><a>Plugins</a></li>
+		</ul>
+	</div>
 	<div class='plugs'/>
 	<div class='leftRight'></div>
 	<div class='fields' />

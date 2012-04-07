@@ -12,8 +12,10 @@ $barDark: #cfcfcf;
 $barStop: #a8a8a8;
 $barBorder: #dedede;
 $colorStop: 75%;
-$headerDark: #444;
-$headerLight: #777;
+$headerDark: #000;
+$headerLight: #555;
+
+$headerHeight: 40px;
 
 .stack > *:not(.active) {
   display: none !important;
@@ -21,7 +23,7 @@ $headerLight: #777;
 
 html,
 body {
-  background-color:#e4e4e4 !important;
+  background-color:#efefef !important;
   padding: 0;
   margin:0;
   height:100%;
@@ -34,14 +36,14 @@ body {
 }
 
 #header {
-  height:46px;
+  height:$headerHeight;
   background-image:-webkit-gradient(linear, center top, center bottom, from($headerLight), to($headerDark));
   margin:0;
   color:#ddd;
   font-style:italic;
   .title {
-    margin:12px 0 0 20px;
-    font-size:24px;
+    margin:9px 0 0 14px;
+    font-size:21px;
     position:relative;
     float:left;
   }
@@ -50,6 +52,7 @@ body {
     float:right;
     margin-right:8px;
   }
+
 }
 
 footer {
@@ -58,12 +61,6 @@ footer {
   color:#ccc;
 }
 
-
-.main {
-  width:100%;
-  position:relative;
-  float:left;
-}
 
 @mixin boxVH {
     -webkit-box-flex:1;
@@ -79,6 +76,68 @@ footer {
 @mixin boxH {
   @include boxVH;
   -webkit-box-orient:horizontal;
+}
+
+.main {
+  width:100%;
+  @include boxV;
+}
+
+$menuBg:#333;
+$menuBorder:#bbb;
+$menuColor:#efefef;
+.search {
+  position:absolute;
+  width:220px;
+  background:$menuBg;
+  height:30px;
+  p {
+    margin:6px 0 0 12px;
+    color:$menuColor;
+    font-size:14px;
+    position:relative;
+    float:left;
+    width:auto;
+  }
+  input {
+    margin:2px 0 0 0;
+    -webkit-border-radius:8px;
+    background:#ddd;
+    width:152px;
+    height:14px;
+    margin:7px 0 0 9px;
+    border:none;
+  }
+}
+
+.menu {
+  background:$menuBg;
+  width:100%;
+  height:23px;
+  position:relative;
+  float:left;
+  margin:0;
+  padding:7px 0 0 0;
+  border-bottom:1px solid $menuBorder;
+  ul {
+    position:relative;
+    float:left;
+    margin:0;
+    padding:0 8px;
+    li {
+      position:relative;
+      float:left;
+      list-style:none;
+      margin:0px 3px 0 0;
+      padding:0px 7px;
+      border-right:1px solid $menuBorder;
+      height:20px;
+      a {
+        font-size:14px;
+        color:$menuColor;
+      }
+    }
+  }
 }
 
 #app {
@@ -97,7 +156,10 @@ footer {
 
       div.items {
         -webkit-box-flex:1;
-        padding:12px 0 12px 12px;
+        padding:12px 0 12px 10px;
+        div.item {
+          margin:6px 0;
+        }
       }
 
       ul.show {
@@ -114,8 +176,9 @@ footer {
       }
     }
 
+    $divWidth:5px;
     div.divUpDown {
-      width:8px;
+      width:$divWidth;
       border-width: 0 1px 0 1px;
       background: -webkit-gradient(linear, left center, right center, from($barStart), color-stop($colorStop,$barDark), to($barStop));
       border-left:1px dotted $barBorder;
@@ -130,7 +193,7 @@ footer {
 
 
     div.leftRight {
-      height:8px;
+      height:$divWidth;
       border-width: 0 1px 0 1px;
       background: -webkit-gradient(linear, center bottom, center top, from($barStop), color-stop(100-$colorStop,$barDark), to($barStart));
       border-top:1px dotted $barBorder;
@@ -145,11 +208,11 @@ footer {
 
     div.fields {
       @include boxV;
+      max-width:670px;
     }
 
     div.stack.plugs {
-      margin: 0;
-      @include boxV;
+      margin: 0 0 20px 0;
     }
 
   }
@@ -267,14 +330,16 @@ button:hover {
 
 div.head {
   font-size:28px;
-  color:#353;
+  color:#555;
   width:620px;
-  margin:20px 0 16px 20px;
+  margin:20px 0 14px 20px;
   position:relative;
   float:left;
   font-style:italic;
   font-weight:bold;
-  background-image:-webkit-gradient(linear, left center, right center, from(#eee), to(#d3d3d3));
+ /* background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(100-$colorStop,$barDark),to(#d3d3d3));*/
+  box-shadow: 4px 4px 16px #bbb;
+  background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(55%,#e8e8e8), to(#d0d0d0));
   -webkit-border-radius:5px;
   padding:8px 0px 0px 5px;
 
@@ -328,12 +393,12 @@ div.head.less {
   font-size:15px;
   width:$sidebarWidth - 5px;
   height:21px;
-  margin:8px 0;
+  margin:40px 0 16px;
   padding:1px 2px 1px 4px;
 }
 
 div.head.child {
-  margin:16px 0 0 32px;
+  margin:20px 0 14px 32px;
   width:606px;
   font-size:22px;
 }

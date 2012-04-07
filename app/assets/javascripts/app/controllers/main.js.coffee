@@ -28,6 +28,7 @@ class App.PlugsIndex extends Spine.Controller
 
   new: ->
     @navigate '/plugs/new'
+    @navigate '/fields/init'
 
   edit: (e) ->
     @navigate '/plugs', $(e.target).item().id, 'edit'

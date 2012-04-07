@@ -29,7 +29,13 @@ class JQ
       $(targetDiv).slideDown 'fast'
       $(e.target).fadeOut 'fast', -> $(this).addClass('opened').fadeIn 'slow'
 
-  @set_new: (e) ->
-    e.find('.addField').addClass 'goBack'
+  @set_edit: (e) ->
+    e.fadeOut 'fast', -> e.find('.addField').addClass('goBack').fadeIn 'slow'
+
+  @show_divider: ( show_it ) ->
+    if show_it is false
+      $('#app .main .leftRight').hide()
+    else 
+      $('#app .main .leftRight').show()
 
 window.JQ = JQ
