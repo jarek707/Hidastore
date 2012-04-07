@@ -22,6 +22,7 @@ class App extends Spine.Controller
     #@append(@fields = new App.Fields)
     #  ...
     
+    console.debug('App constructor')
     Spine.Route.setup()
 
 window.App = App

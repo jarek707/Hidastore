@@ -1,57 +1,60 @@
 $ = jQuery.sub() 
+MainPlug  = {}
+mainplug  = ''
+childplug = ''
 
 $.fn.item = ->
   elementID   = $(@).data('id')
   elementID or= $(@).parents('[data-id]').data('id')
-  Plug.find(elementID)
+  MainPlug.find(elementID)
 
-class App.PlugsIndex extends Spine.Controller
-  className: 'sidebar'
+class App.Index extends Spine.Controller
+  className: 'sidebar '
   events:
     'click [data-type=destroy]': 'destroy'
     'click [data-type=show]':    'show'
     'click button.new':          'new'
 
   constructor: ->
+    @.className += mainplug
     super
 
   render: (params) =>
-    @html @view('plugs/index') items: Plug.all()
+    @html @view('mainplug/index') items: MainPlug.all()
 
-  renderPlug: ->
-    # HACK - need to jump start plug controller, works for now
-    if (match = Spine.Route.path.match(/\/plugs\/(\d*)/))
-      @navigate '/plugs', match.pop()
-    
   show: (e) ->
-    @navigate '/plugs', $(e.target).item().id
+    @navigate "/#{mainplug}", $(e.target).item().id
 
   new: ->
-    @navigate '/plugs/new'
-    @navigate '/fields/init'
+    @navigate "/#{mainplug}/new"
+    @navigate "/#{childplug}/init"
 
   edit: (e) ->
-    @navigate '/plugs', $(e.target).item().id, 'edit'
+    @navigate "/#{mainplug}", $(e.target).item().id, 'edit'
     
   destroy: (e) ->
     item = $(e.target).item()
     if confirm('Sure?')
       item.destroy() 
-      @navigate '/plugs/init'
+      @navigate "/#{mainplug}/init"
     
-class App.AllApp extends Spine.Controller
-  className: "allApp"
+class App.AllPlug extends Spine.Controller
+  className: "allPlug "
 
   constructor: ->
+    MainPlug  = App[App.mainplug.uc_first()]
+    mainplug  = App.mainplug.plur()
+    childplug = App.childplug.plur()
+
+    @.className += mainplug
     super
+
+    MainPlug.fetch()
     @html @view('layout')
 
-    Plug.fetch()
-
-    $('.app .allApp .fields').ready( ->
-      Plug.bind 'refresh change',
-             ( new App.PlugsIndex { el: $ '.sidebar' } ).render
-      plugs  = new App.Plugs      { el: $ '.plugs'   }
-      fields = new App.Fields     { el: $ '.fields'  }
-      fields.plugs = plugs
+    $('.app .allApp .childplug').ready( ->
+      MainPlug.bind 'refresh change', ( new App.Index { el: $ '.sidebar' } ).render
+      mains  = new App.MainPlugs  { el: $ '.mainplug'  }
+      childs = new App.ChildPlugs { el: $ '.childplug' }
+      childs.mains = mains
     )

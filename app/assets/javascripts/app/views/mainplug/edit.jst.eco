@@ -1,0 +1,20 @@
+  <div class='head'><%= @legend %>
+	  <button class='showHide opened' data-type='showHide' target='.hidePlug'></button>
+    <button class='back' data-type="back">Back</button>
+  </div>
+
+  <ul class='show labels hidePlug'>
+    <li class='lab'>Tab Name</li>
+    <li class='lab'>Flags</li>
+    <li class='lab'>Legend</li>
+    <li class='lab'>Parent</li>
+  </ul>
+<form>
+  <ul class='show item hidePlug'>
+    <li class='val'><input type="text" name="tab_name" value="<%= @tab_name %>" required autofocus></li>
+    <li class='val'><input type="text" name="flags" value="<%= @flags %>" required ></li>
+    <li class='val'><input type="text" name="legend" value="<%= @legend %>" required ></li>
+    <li class='val'><input type="text" name="parent_id" value="<%= @parent_id %>" required ></li>
+    <li class='actions'><button class='save' style='color:transparent;'>Create</button></li>
+  </ul>
+</form>

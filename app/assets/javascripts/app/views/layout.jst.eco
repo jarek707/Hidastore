@@ -11,7 +11,7 @@
 			<li><a>Plugins</a></li>
 		</ul>
 	</div>
-	<div class='plugs'/>
+	<div class='mainplug'/>
 	<div class='leftRight'></div>
-	<div class='fields' />
+	<div class='childplug' />
 </div>

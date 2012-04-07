@@ -1,0 +1,12 @@
+		<div class='head child'>Fields
+			<button class='showHide opened' data-type='showHide' target='.hidable'></button>
+			<button class='addField' data-type='new'></button>
+		</div>
+		<div class='hidable'>
+			<ul class='show labels'>
+				<li class='lab'>Label</li>
+				<li class='lab'>Dom Id</li>
+				<li class='lab'>Elm Type</li>
+				<li class='lab'>Exposure</li>
+			</ul>
+	  </div>

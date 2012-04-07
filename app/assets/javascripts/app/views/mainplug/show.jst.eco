@@ -1,0 +1,17 @@
+  <div class='head'><%= @legend %>
+	  <button class='showHide opened' data-type='showHide' target='.hidePlug'></button>
+  	<button class='edit' data-type='edit'></button>
+  </div>
+
+  <ul class='show labels hidePlug'>
+    <li class='lab'>Tab Name</li>
+    <li class='lab'>Flags</li>
+    <li class='lab'>Legend</li>
+    <li class='lab'>Parent</li>
+  </ul>
+  <ul class='show item hidePlug'>
+    <li class='val'><%= @tab_name %></li>
+    <li class='val'><%= @flags %></li>
+    <li class='val'><%= @legend %></li>
+    <li class='val'><%= @parent_id %></li>
+  </ul>

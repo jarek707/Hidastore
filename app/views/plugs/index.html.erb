@@ -1,7 +1,9 @@
 <script type="text/javascript" charset="utf-8">
   jQuery(function(){
     // onready, instantiate App
-   App.appInstance = new App({el: $("#app")})
-   App.appInstance.append( this.item = new App.AllApp )
+   App.mainplug  = 'plug';
+   App.childplug = 'field';
+   App.appInstance = new App({el: $("#app")});
+   App.appInstance.append( this.item = new App.AllPlug );
   });
 </script>

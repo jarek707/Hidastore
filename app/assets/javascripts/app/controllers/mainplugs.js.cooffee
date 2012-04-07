@@ -1,14 +1,16 @@
 $ = jQuery.sub()
-Plug  = App.Plug
-Field = App.Field
+MainPlug  = {}
+ChildPlug = {}
+mainplug  = ''
+childplug = ''
 
 $.fn.item = ->
   elementID   = $(@).data('id')
   elementID or= $(@).parents('[data-id]').data('id')
-  Plug.find(elementID)
+  MainPlug.find(elementID)
 
 class New extends Spine.Controller
-  className: 'plugs new' 
+  className: 'new '
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
@@ -18,18 +20,18 @@ class New extends Spine.Controller
     @active @render
     
   render: ->
-    @html @view('plugs/new')
+    @html @view("mainplug/new")
 
   back: ->
-    @navigate '/plugs', Plug.last().id
+    @navigate '/', MainPlug.last().id
 
   submit: (e) ->
     e.preventDefault()
-    plug = Plug.fromForm(e.target).save()
-    @navigate '/plugs',  Plug.last().id
+    plug = MainPlug.fromForm(e.target).save()
+    @navigate "/#{mainplug}",  MainPlug.last().id
 
 class Edit extends Spine.Controller
-  className: 'plugs edit'
+  className: 'edit '
   events:
     'click [data-type=back]': 'back'
     'submit form': 'submit'
@@ -41,47 +43,47 @@ class Edit extends Spine.Controller
       @change(params.id)
       
   change: (id) ->
-    @item = Plug.find(id)
+    @item = MainPlug.find(id)
     @render()
     
   render: ->
-    @html @view('plugs/edit')(@item)
+    @html @view("mainplug/edit")(@item)
 
   back: ->
-    @navigate '/plugs', @item.id
+    @navigate "/#{mainplug}", @item.id
 
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    @navigate '/plugs', @item.id
+    @navigate "/#{mainplug}", @item.id
 
   show_hide: (e) ->
       JQ.show_hide(e)
 
 class Show extends Spine.Controller
-  className: 'plugs show'
+  className: 'show '
   events:
     'click [data-type=edit]': 'edit'
     'click [data-type=showHide]': 'show_hide'
     
   constructor: ->
     super
-    Field.fetch()
+    ChildPlug.fetch()
     @active (params) ->
         @change(params.id) if params
 
   change: (id) ->
-    @item = Plug.find(id)
+    @item = MainPlug.find(id)
     @render()
 
   render: ->
     if @item
       JQ.show_divider()
-      @html @view('plugs/show') @item
-      @navigate '/fields', @item.id
+      @html @view("mainplug/show") @item
+      @navigate "/#{childplug}", @item.id
 
   edit: ->
-    @navigate '/plugs', @item.id, 'edit'
+    @navigate "/#{mainplug}", @item.id, 'edit'
 
   show_hide: (e) ->
       JQ.show_hide(e)
@@ -90,11 +92,20 @@ class Init extends Spine.Controller
   constructor: ->
     super
     @active -> 
-      @navigate '/fields/init'
+      @navigate "/#{childplug}/init"
 
-class App.Plugs extends Spine.Stack
+class App.MainPlugs extends Spine.Stack
   constructor: ->
-    App.plugsControllerInstance = @
+    MainPlug  = App[App.mainplug.uc_first()]
+    ChildPlug = App[App.childplug.uc_first()]
+    mainplug  = App.mainplug.plur()
+    childplug = App.childplug.plur()
+
+    @.className += mainplug
+    @.routes["/#{mainplug}/new"]      = 'new'
+    @.routes["/#{mainplug}/init"]     = 'init'
+    @.routes["/#{mainplug}/:id/edit"] = 'edit'
+    @.routes["/#{mainplug}/:id"]      = 'show'
     super
 
   controllers:
@@ -103,11 +114,5 @@ class App.Plugs extends Spine.Stack
     show:  Show
     init:  Init
     
-  routes:
-    '/plugs/new':      'new'
-    '/plugs/init':     'init'
-    '/plugs/:id/edit': 'edit'
-    '/plugs/:id':      'show'
-    
   default: 'init'
-  className: 'stack plugs'
+  className: "stack "

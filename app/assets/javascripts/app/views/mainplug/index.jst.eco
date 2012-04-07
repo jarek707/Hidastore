@@ -1,0 +1,14 @@
+<div class='items'>
+	<div class='head less'>Plugins:
+		<button class='new'  data-type="new">New</button>
+	</div>
+	<% for item in @items: %>
+		<div class="item" data-id="<%= item.id %>">
+			<ul class='show'>
+				<li><a data-type="show"><%= item.legend %></a></li>
+				<li class='actions right'><button data-type='destroy' class="delete" style='float:right'></button></li>
+			</ul>
+		</div>
+	<% end %>
+</div>
+<footer>...comming</footer>

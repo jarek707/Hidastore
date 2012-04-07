@@ -1,6 +1,6 @@
 class App.Field extends Spine.Model
   @configure 'Field', 'dom', 'flags', 'xml', 'plug_id', 'label', 'vflag', 'elmtype_id', 'exposure_id', 'seq'
-  @belongsTo 'plug', 'Plug'
+  @belongsTo 'plug', 'App.Plug'
 
   @extend Spine.Model.Ajax
 
@@ -10,6 +10,3 @@ class App.Field extends Spine.Model
   @updateAttributes: (atts, options) ->
     log  [ atts , options ]
     super
-    
-
-window.Field=App.Field

@@ -1,10 +1,14 @@
 $ = jQuery.sub()
-Field = App.Field
+
+MainPlug  = {}
+ChildPlug = {}
+mainplug  = ''
+childplug = ''
 
 $.fn.item = ->
   elementID   = $(@).data('id')
   elementID or= $(@).parents('[data-id]').data('id')
-  Field.find(elementID)
+  ChildPlug.find(elementID)
 
 class New extends Spine.Controller
   className: 'new'
@@ -23,30 +27,30 @@ class New extends Spine.Controller
     @item = 
       plug_id: Index.plug_id
 
-    @html @view('fields/head')
+    @html @view("childplug/head")
     JQ.set_edit @el
-    @append @view('fields/new') @item
+    @append @view("childplug/new") @item
     App.Selects.init()
 
   back: ->
-    @navigate '/fields', Index.plug_id
+    @navigate "/#{childplug}", Index.plug_id
 
   submit: (e) ->
     e.preventDefault()
-    Field.fromForm(e.target).save()
-    Field.fetch()
-    @navigate '/fields', Index.plug_id
+    ChildPlug.fromForm(e.target).save()
+    ChildPlug.fetch()
+    @navigate "/#{childplug}/", Index.plug_id
 
   show_hide: (e) ->
       JQ.show_hide(e)
 
   to_index: ->
-    @navigate '/fields', Index.plug_id
+    @navigate "/#{childplug}", Index.plug_id
 
 class Edit extends Spine.Controller
   className: 'edit'
   events:
-    'submit form.field': 'submit'
+    'submit form.field':          'submit'
     'click [data-type=showHide]': 'show_hide'
     'click [data-type=new]':      'to_index'
 
@@ -56,28 +60,28 @@ class Edit extends Spine.Controller
       @change params.id
 
   change: (id) ->
-    @item = Field.find(id)
+    @item = ChildPlug.find(id)
     @render()
     
   render: ->
-    @html   @view('fields/head')
-    @append @view('fields/edit')(@item)
+    @html   @view("childplug/head")
+    @append @view('childplug/edit')(@item)
     JQ.set_edit @el
     App.Selects.init()
 
   back: ->
-    @navigate '/fields'
+    @navigate "/#{childplug}"
 
   submit: (e) ->
     e.preventDefault()
     @item.fromForm(e.target).save()
-    @navigate '/fields', Index.plug_id
+    @navigate "/#{childplug}", Index.plug_id
 
   show_hide: (e) ->
       JQ.show_hide(e)
 
   to_index: ->
-    @navigate '/fields', Index.plug_id
+    @navigate "/#{childplug}", Index.plug_id
 
 class Index extends Spine.Controller
   plug_id: -1
@@ -97,25 +101,25 @@ class Index extends Spine.Controller
 
   render: ->
     @item = 
-      fields : Plug.find(Index.plug_id).fields().all()
-      plug_id: Index.plug_id
-      helper : { 
+      childItems : MainPlug.find(Index.plug_id)[childplug]().all()
+      plug_id    : Index.plug_id
+      helper     : { 
         subSelect: ( domId, val ) ->
           App.Selects.getText domId,val
       }
 
-    @html @view('fields/head')
-    @append @view('fields/index')(@item)
+    @html @view('childplug/head')
+    @append @view('childplug/index')(@item)
 
   show_hide: (e) ->
     JQ.show_hide(e)
 
   new: (e) ->
-    @navigate '/fields', Index.plug_id, 'new'
+    @navigate "/#{childplug}", Index.plug_id, 'new'
 
   edit: (e) ->
     item = $(e.target).item()
-    @navigate '/fields', item.plug_id, 'edit', item.id
+    @navigate "/#{childplug}", item.plug_id, 'edit', item.id
 
   destroy: (e) ->
     e.preventDefault()
@@ -125,24 +129,31 @@ class Index extends Spine.Controller
       @navigate '/plugs', Index.plug_id
 
 class Init extends Spine.Controller
+  className: 'init'
+
   controller: ->
     super
     JQ.show_divider false
 
-class App.Fields extends Spine.Stack
+class App.ChildPlugs extends Spine.Stack
+  constructor: ->
+    MainPlug  = App[App.mainplug.uc_first()]
+    ChildPlug = App[App.childplug.uc_first()]
+    mainplug  = App.mainplug.plur()
+    childplug = App.childplug.plur()
+
+    @.className += childplug
+    @.routes["/#{childplug}/init"]         = 'init'
+    @.routes["/#{childplug}/:id"]          = 'index'
+    @.routes["/#{childplug}/:id/new"]      = 'new'
+    @.routes["/#{childplug}/:id/edit/:id"] = 'edit'
+    super
+
   controllers:
     index:   Index
     new:     New
     edit:    Edit
     init:    Init
 
-  routes:
-    '/fields/init'         : 'init'
-    '/fields/:id'          : 'index'
-    '/fields/:id/new'      : 'new'
-    '/fields/:id/edit/:id' : 'edit'
-    
   default: 'init'
-  className: 'stack fields'
-
-Fields = App.Fields
+  className: 'stack '

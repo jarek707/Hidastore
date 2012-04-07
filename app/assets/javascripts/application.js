@@ -10,5 +10,13 @@
 //= require_tree .
 
 function log(arg) { console.debug(arg); }
-App.Selects.load()
-App.controllers = []
+App.Selects.load();
+App.controllers = [];
+
+String.prototype.uc_first = function() {
+	return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+String.prototype.plur = function() {
+	return this + ( (this.substr(this.length-1) == 's' ) ? '' :'s' )
+}

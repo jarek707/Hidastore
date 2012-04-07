@@ -41,6 +41,7 @@ body {
   margin:0;
   color:#ddd;
   font-style:italic;
+  border-bottom:1px solid #444;
   .title {
     margin:9px 0 0 14px;
     font-size:21px;
@@ -60,7 +61,6 @@ footer {
   background-image:-webkit-gradient(linear, center top, center bottom, from($headerLight), to($headerDark));
   color:#ccc;
 }
-
 
 @mixin boxVH {
     -webkit-box-flex:1;
@@ -143,7 +143,7 @@ $menuColor:#efefef;
 #app {
   @include boxV;
 
-  div.allApp {
+  div.allPlug {
     @include boxH;
     -webkit-box-pack:start;
 
@@ -182,11 +182,12 @@ $menuColor:#efefef;
       border-width: 0 1px 0 1px;
       background: -webkit-gradient(linear, left center, right center, from($barStart), color-stop($colorStop,$barDark), to($barStop));
       border-left:1px dotted $barBorder;
+      box-shadow:4px 0 12px #ccc;
     }
 
-    div.plugs.show, 
-    div.plugs.new, 
-    div.plugs.edit {
+    div.mainplug.show, 
+    div.mainplug.new, 
+    div.mainplug.edit {
       @include boxV;
       margin-bottom:20px;
     }
@@ -195,6 +196,7 @@ $menuColor:#efefef;
     div.leftRight {
       height:$divWidth;
       border-width: 0 1px 0 1px;
+      box-shadow:0px 4px 12px #ccc;
       background: -webkit-gradient(linear, center bottom, center top, from($barStop), color-stop(100-$colorStop,$barDark), to($barStart));
       border-top:1px dotted $barBorder;
       margin-left:-1px;
@@ -206,12 +208,12 @@ $menuColor:#efefef;
       margin:0;
     }
 
-    div.fields {
+    div.childplug {
       @include boxV;
       max-width:670px;
     }
 
-    div.stack.plugs {
+    div.stack.mainplug {
       margin: 0 0 20px 0;
     }
 
@@ -315,7 +317,7 @@ button {
   width:16px;
   height:16px;
   margin:0;
-  opacity:0.7;
+  opacity:0.6;
   background:url("edit16.png");
   margin-left: 8px;
   color:transparent;
@@ -323,9 +325,6 @@ button {
 
 button:hover {
   opacity:1;
-  border:1px solid #ccc;
-  width:18px;
-  height:18px;
 }
 
 div.head {
@@ -338,7 +337,7 @@ div.head {
   font-style:italic;
   font-weight:bold;
  /* background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(100-$colorStop,$barDark),to(#d3d3d3));*/
-  box-shadow: 4px 4px 16px #bbb;
+  /*box-shadow: 4px 4px 12px #ccc;*/
   background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(55%,#e8e8e8), to(#d0d0d0));
   -webkit-border-radius:5px;
   padding:8px 0px 0px 5px;
