@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  uc_tab: MyString
-  lc_tab: MyString
-
-two:
-  uc_tab: MyString
-  lc_tab: MyString
