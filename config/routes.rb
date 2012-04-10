@@ -1,5 +1,7 @@
 Hs::Application.routes.draw do
 
+  devise_for :users
+
   resources :tucs
   resources :exposures
   resources :elmtypes
