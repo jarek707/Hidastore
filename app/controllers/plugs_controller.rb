@@ -1,8 +1,11 @@
 class PlugsController < ApplicationController
+  load_and_authorize_resource
+
   # GET /plugs
   # GET /plugs.json
   def index
     @plugs = Plug.all
+    authorize! :read, @plug
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +17,6 @@ class PlugsController < ApplicationController
   # GET /plugs/1
   # GET /plugs/1.json
   def show
-    @plug = Plug.find(params[:id])
     #@plugs = Plug.where("legend!='Root' AND legend!='Plugins' AND legend!='Fields'")
     #@plugs = Plug.where("legend!='Root'")
 
