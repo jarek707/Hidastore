@@ -345,7 +345,7 @@ div.head {
   //margin:20px 0 14px 20px;
   margin:0;
   border-bottom:1px solid #ccc;
-  padding:12px 16px 4px 12px;
+  padding:12px 0px 4px 6px;
   font-style:italic;
   font-weight:bold;
  /* background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(100-$colorStop,$barDark),to(#d3d3d3));*/
@@ -380,7 +380,7 @@ div.head {
     background:url("arrow_down24.png");
     height:24px;
     width:24px;
-    margin:0px 7px 5px;
+    margin:0px 12px 5px 4px;
   }
   button.showHide.opened {
     background:url("arrow_up24.png");
