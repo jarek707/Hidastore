@@ -17,6 +17,16 @@ $headerLight: #555;
 
 $headerHeight: 40px;
 
+@mixin rightRel {
+  position:relative;
+  float:right;
+}
+
+@mixin leftRel {
+  position:relative;
+  float:left;
+}
+
 .stack > *:not(.active) {
   display: none !important;
 }
@@ -45,12 +55,10 @@ body {
   .title {
     margin:9px 0 0 14px;
     font-size:21px;
-    position:relative;
-    float:left;
+    @include leftRel;
   }
   .personal {
-    position:relative;
-    float:right;
+    @include rightRel;
     margin-right:8px;
   }
 
@@ -111,22 +119,19 @@ $menuColor:#efefef;
 }
 
 .menu {
+  @include leftRel;
   background:$menuBg;
   width:100%;
   height:23px;
-  position:relative;
-  float:left;
   margin:0;
   padding:7px 0 0 0;
   border-bottom:1px solid $menuBorder;
   ul {
-    position:relative;
-    float:left;
+    @include leftRel;
     margin:0;
     padding:0 8px;
     li {
-      position:relative;
-      float:left;
+      @include leftRel;
       list-style:none;
       margin:0px 3px 0 0;
       padding:0px 7px;
@@ -151,21 +156,27 @@ $menuColor:#efefef;
       display:-webkit-box;
       -webkit-box-orient:vertical;
       -webkit-box-align:stretch;
+      margin-top:30px; 
       padding: 0;
       width:$sidebarWidth + 20px;
 
       div.items {
         -webkit-box-flex:1;
-        padding:12px 0 12px 10px;
+        padding:0;
         div.item {
-          margin:6px 0;
+          @include leftRel;
+          margin:0 0 0 29px;
+          border-bottom:1px dotted #ccc;
+          width:196px;
+          padding:2px;
         }
       }
 
       ul.show {
         width: $sidebarWidth - 9px;
         clear:both;
-        margin:3px 8px 1px;
+        margin:0;
+        padding:0;
         li {
           font-size:12px;
         }
@@ -204,13 +215,11 @@ $menuColor:#efefef;
     }
 
     div#fieldWrap {
-      max-width:646px;
       margin:0;
     }
 
     div.childplug {
       @include boxV;
-      max-width:670px;
     }
 
     div.stack.mainplug {
@@ -266,13 +275,13 @@ ul.show {
     white-space:nowrap;
     margin-left:10px;
     text-align:right;
-    -webkit-border-radius:6px;
+    -webkit-border-radius:3px;
     border-bottom:1px dotted #d4d4d4;
   }
 
   li.val input , li.val select {
     border:none;
-    background: $fieldBg;
+    background: #dfdfdf;
     margin-left:0;
     text-align:left;
     box-shadow:5px 5px 8px #ccc;
@@ -294,7 +303,7 @@ ul.show {
     float:right;
     margin-right: 4px;
     button {
-      margin-right:4px;
+      margin-right:12px;
     }
   }
 
@@ -328,19 +337,20 @@ button:hover {
 }
 
 div.head {
+  @include leftRel;
   font-size:28px;
   color:#555;
-  width:620px;
-  margin:20px 0 14px 20px;
-  position:relative;
-  float:left;
+  width:99%;
+  //width:620px;
+  //margin:20px 0 14px 20px;
+  margin:0;
+  border-bottom:1px solid #ccc;
+  padding:12px 16px 4px 12px;
   font-style:italic;
   font-weight:bold;
  /* background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(100-$colorStop,$barDark),to(#d3d3d3));*/
   /*box-shadow: 4px 4px 12px #ccc;*/
-  background-image: -webkit-gradient(linear, left center, right center, from(#eee), color-stop(55%,#e8e8e8), to(#d0d0d0));
-  -webkit-border-radius:5px;
-  padding:8px 0px 0px 5px;
+ background-image: -webkit-gradient(linear, left center, right center, from(#d3d3d3),to(#eee));
 
   button {
     color:transparent;
@@ -389,16 +399,14 @@ div.head {
 }
 
 div.head.less {
+  @include leftRel;
   font-size:15px;
-  width:$sidebarWidth - 5px;
-  height:21px;
-  margin:40px 0 16px;
-  padding:1px 2px 1px 4px;
+  width:$sidebarWidth - 4px;
+  height:20px;
+  padding:8px 8px 4px 12px;
 }
 
 div.head.child {
-  margin:20px 0 14px 32px;
-  width:606px;
   font-size:22px;
 }
 
@@ -429,8 +437,7 @@ button.alledit{
   background:url('dbsave24.png');
   width:24px;
   height:24px;
-  position:relative;
-  float:left;
+  @include leftRel;
   margin:-3px 0 0 8px;
   cursor:pointer;
   border:none;
@@ -453,8 +460,7 @@ button.delete {
 }
 
 ul.add_field {
-  position:relative;
-  float:left;
+  @include leftRel;
   margin:12px 0 0 20px;
   li {
     button {
